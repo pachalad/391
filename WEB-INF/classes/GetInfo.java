@@ -60,13 +60,21 @@ public class GetInfo extends HttpServlet
 	        description = rset.getString("description");	        
                 out.println("<html><head><title>"+owner_name + "'s photo " + "</title>+</head>" +
 	                 "<body bgcolor=\"#000000\" text=\"#cccccc\">" +
-		 "<center><img src = \"/proj1/GetOnePic?"+picid+"\">" +
+		 "<center><img src = \"/proj1/GetOnePic?big"+picid+"\">" +
 			 "<h3>Subject: " + subject +" </h3>" +
 			 "<h3>Location: " + place + " </h3>" +
 			 "<h3>Owner: " + owner_name + " </h3>" +
 			 "<h3>Date: " + timing + " </h3>" +
 			 "<h3>Description: " + description + " </h3>" +
 			 "</body></html>");
+            /*
+            	query = "SELECT * FROM images WHERE photo_id=" + picid +
+            			"AND user_id = ";
+                
+                PreparedStatement stmt = conn.prepareStatement(
+                        "insert into images (photo_id, owner_name, permitted, subject, place, timing, description, thumbnail, photo) " +
+                    	"values (200,'kieran', 1, 'stuff', 'a place', NULL, 'test description', ?, ?)" );
+              */  
             }
 	    else
 	      out.println("<html> Pictures are not avialable</html>");
