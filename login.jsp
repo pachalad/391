@@ -35,7 +35,7 @@
         	Connection conn = null;
 	
 	        String driverName = "oracle.jdbc.driver.OracleDriver";
-            	String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
+            String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
 	
 	        try{
 		        //load and register the driver
