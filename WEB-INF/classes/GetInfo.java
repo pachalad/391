@@ -30,65 +30,94 @@ public class GetInfo extends HttpServlet
     public void doGet(HttpServletRequest request,
 		      HttpServletResponse response)
 	throws ServletException, IOException {
+    	
+    	//  send out the HTML file
+    	response.setContentType("text/html");
+    	PrintWriter out = response.getWriter ();
 	
-	//  construct the query  from the client's QueryString
-	String picid  = request.getQueryString();
-	String query;
+    	HttpSession session = request.getSession(true);
+    	String userID = (String) session.getAttribute("userID");
 
-	query = "select owner_name, subject, place, timing, description from images where photo_id="
-	        + picid;
+    	if (session.getAttribute("userID") == null) {
+    	    // Session is not created.
+    		out.println("<CENTER>");    
+    	    out.println("<h1>Photosight</h1>");
+    		out.println("<FORM METHOD = link ACTION = login.html>");
+    		out.println("<INPUT TYPE= submit VALUE = Login>");
+    		out.println("</FORM>");
+    		out.println("</CENTER>");
 
-	//ServletOutputStream out = response.getOutputStream();
-	PrintWriter out = response.getWriter();
 
-	/*
-	 *   to execute the given query
-	 */
-	Connection conn = null;
-	try {
-	    conn = getConnected();
-	    Statement stmt = conn.createStatement();
-	    ResultSet rset = stmt.executeQuery(query);
-	    response.setContentType("text/html");
-            String owner_name, subject, place, timing, description;
+    	} else {
+    
+			//  construct the query  from the client's QueryString
+			String picid  = request.getQueryString();
+			String query;
+		
+			query = "select owner_name, subject, place, timing, description from images where photo_id="
+			        + picid;
+		
+			/*
+			 *   to execute the given query
+			 */
+			Connection conn = null;
+			try {
+			    conn = getConnected();
+			    Statement stmt = conn.createStatement();
+			    ResultSet rset = stmt.executeQuery(query);
+		        String owner_name, subject, place, timing, description;
+		
+			    if ( rset.next() ) {
+			    	owner_name = rset.getString("owner_name");
+			    	subject = rset.getString("subject");
+			        place = rset.getString("place");
+			        timing = rset.getString("timing");
+			        description = rset.getString("description");	        
+		            out.println("<html><head><title>"+owner_name + "'s photo " + "</title></head>" +
+		            		"<body bgcolor=\"#000000\" text=\"#cccccc\">" +
+			                "<center><img src = \"/proj1/GetOnePic?big"+picid+"\">" +
+			                "<h3>Subject: " + subject +" </h3>" +
+			                "<h3>Location: " + place + " </h3>" +
+			                "<h3>Owner: " + owner_name + " </h3>" +
+							"<h3>Date: " + timing + " </h3>" +
+							"<h3>Description: " + description + " </h3>" +
+							"</body></html>");
 
-	    if ( rset.next() ) {
-	    	owner_name = rset.getString("owner_name");
-	    	subject = rset.getString("subject");
-	        place = rset.getString("place");
-	        timing = rset.getString("timing");
-	        description = rset.getString("description");	        
-                out.println("<html><head><title>"+owner_name + "'s photo " + "</title>+</head>" +
-	                 "<body bgcolor=\"#000000\" text=\"#cccccc\">" +
-		 "<center><img src = \"/proj1/GetOnePic?big"+picid+"\">" +
-			 "<h3>Subject: " + subject +" </h3>" +
-			 "<h3>Location: " + place + " </h3>" +
-			 "<h3>Owner: " + owner_name + " </h3>" +
-			 "<h3>Date: " + timing + " </h3>" +
-			 "<h3>Description: " + description + " </h3>" +
-			 "</body></html>");
-            /*
-            	query = "SELECT * FROM images WHERE photo_id=" + picid +
-            			"AND user_id = ";
-                
-                PreparedStatement stmt = conn.prepareStatement(
-                        "insert into images (photo_id, owner_name, permitted, subject, place, timing, description, thumbnail, photo) " +
-                    	"values (200,'kieran', 1, 'stuff', 'a place', NULL, 'test description', ?, ?)" );
-              */  
-            }
-	    else
-	      out.println("<html> Pictures are not avialable</html>");
-	} catch( Exception ex ) {
-	    out.println(ex.getMessage() );
-	}
-	// to close the connection
-	finally {
-	    try {
-		conn.close();
-	    } catch ( SQLException ex) {
-		out.println( ex.getMessage() );
-	    }
-	}
+
+		            //Check if user has viwed image before
+		            String viewed_query = "SELECT count(*) FROM distinct_views WHERE photo_id=" + picid +
+		            		" AND user_id = '" + userID + "'";
+					ResultSet viewed_rset = stmt.executeQuery(viewed_query);
+					viewed_rset.next();
+			    	int count = viewed_rset.getInt(1);
+			    	
+			    	//if they haven't, add them to the viwed table
+					if ( count == 0 ) {
+						out.println("<h3> not found </h3>");
+		                PreparedStatement viewed_stmt = conn.prepareStatement(
+		                        "insert into distinct_views (photo_id, user_id) " +
+		                    	"values (" + picid + ", '" + userID +"')" );
+		
+		                viewed_stmt.executeUpdate();
+		                viewed_stmt.executeUpdate("commit");	
+					}
+					
+		        } else {
+		        	out.println("<html> Pictures are not avialable</html>");
+		        }
+			} catch( Exception ex ) {
+			    out.println(ex.getMessage() );
+			}
+			// to close the connection
+			finally {
+			    try {
+				conn.close();
+			    } catch ( SQLException ex) {
+				out.println( ex.getMessage() );
+			    }
+			}
+		    }
+    	
     }
 
     /*

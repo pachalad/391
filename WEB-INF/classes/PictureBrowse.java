@@ -31,45 +31,59 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 	//  send out the HTML file
 	res.setContentType("text/html");
 	PrintWriter out = res.getWriter ();
+	
+	HttpSession session = request.getSession(true);
+	String userID = (String) session.getAttribute("userID");
+	if (session.getAttribute("userID") == null) {
+	    // Session is not created.
+		out.println("<CENTER>");    
+	    out.println("<h1>Photosight</h1>");
+		out.println("<FORM METHOD = link ACTION = login.html>");
+		out.println("<INPUT TYPE= submit VALUE = Login>");
+		out.println("</FORM>");
+		out.println("</CENTER>");
 
-	out.println("<html>");
-	out.println("<head>");
-	out.println("<title> Photo List </title>");
-	out.println("</head>");
-	out.println("<body bgcolor=\"#000000\" text=\"#cccccc\" >");
-	out.println("<center>");
-	out.println("<h3>The List of Images </h3>");
 
-	/*
-	 *   to execute the given query
-	 */
-	try {
-		//TODO: get query from session
-	    String query = "select photo_id from images";
-
-	    Connection conn = getConnected();
-	    Statement stmt = conn.createStatement();
-	    ResultSet rset = stmt.executeQuery(query);
-	    String p_id = "";
-
-	    while (rset.next() ) {
-		p_id = (rset.getObject(1)).toString();
-
-	       // specify the servlet for the image
-               out.println("<a href=\"/Photosight/GetInfo?"+p_id+"\">");
-	       // specify the servlet for the themernail
-	       out.println("<img src=\"/Photosight/GetOnePic?"+p_id +
-	                   "\"></a>");
+	} else {
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<title> Photo List </title>");
+		out.println("</head>");
+		out.println("<body bgcolor=\"#000000\" text=\"#cccccc\" >");
+		out.println("<center>");
+		out.println("<h3>The List of Images </h3>");
+	
+		/*
+		 *   to execute the given query
+		 */
+		try {
+			//TODO: get query from session
+		    String query = "select photo_id from images";
+	
+		    Connection conn = getConnected();
+		    Statement stmt = conn.createStatement();
+		    ResultSet rset = stmt.executeQuery(query);
+		    String p_id = "";
+	
+		    while (rset.next() ) {
+			p_id = (rset.getObject(1)).toString();
+	
+		       // specify the servlet for the image
+	               out.println("<a href=\"/Photosight/GetInfo?"+p_id+"\">");
+		       // specify the servlet for the themernail
+		       out.println("<img src=\"/Photosight/GetOnePic?"+p_id +
+		                   "\"></a>");
+		    }
+		    stmt.close();
+		    conn.close();
+		} catch ( Exception ex ){ out.println( ex.toString() );}
+	    //TODO change exception
+		out.println("<P><a href=\"/yuan/servlets/logicsql.html\"> Return </a>");
+		out.println("</body>");
+		out.println("</html>");
 	    }
-	    stmt.close();
-	    conn.close();
-	} catch ( Exception ex ){ out.println( ex.toString() );}
-    //TODO change exception
-	out.println("<P><a href=\"/yuan/servlets/logicsql.html\"> Return </a>");
-	out.println("</body>");
-	out.println("</html>");
     }
-    
+	    
     /*
      *   Connect to the specified database
      */
@@ -89,6 +103,8 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 	DriverManager.registerDriver((Driver) drvClass.newInstance());
 	return( DriverManager.getConnection(dbstring,username,password) );
     }
+    
+
 }
 
 
