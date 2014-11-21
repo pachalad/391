@@ -28,8 +28,9 @@ if (session.getAttribute("userID") == null) {
 	out.println("<input type=submit name=bCreate value=Create!><br>");
 	out.println("</CENTER></form>");
 	
-	if(request.getParameter("bSubmit") != null)
+	if(request.getParameter("bCreate") != null)
      {
+		
 		String groupName = (request.getParameter("GROUPNAME")).trim();
 		//establish the connection to the underlying database
     	Connection conn = null;
@@ -69,10 +70,49 @@ if (session.getAttribute("userID") == null) {
 		while(rset!= null && rset.next()){
 			existingGroup = (rset.getString(1)).trim();
 		}
-		
 		if(existingGroup == null){
+			//http://www.w3schools.com/sql/trysql.asp?filename=trysql_func_max this is where I got this query
+			sql = "SELECT MAX(group_id) FROM groups";
+	    	try{
+	        	stmt = conn.createStatement();
+		        rset = stmt.executeQuery(sql);
+	    	}
+	    	catch(Exception ex){
+		        out.println("<hr>" + ex.getMessage() + "<hr>");
+	    	}
 			
-		}
+			String maxID = null;
+			
+			while(rset!= null && rset.next()){
+				maxID = (rset.getString(1)).trim();
+			}
+			
+			int newID = Integer.parseInt(maxID);
+			newID = newID + 1;
+			String newIDInsert = ""+newID;
+			sql = "INSERT INTO groups VALUES("+newIDInsert+",'"+userID+"','"+groupName+"',sysdate)";
+			//out.println(sql);
+	    	try{
+	        	stmt = conn.createStatement();
+		        stmt.executeUpdate(sql);
+		        conn.commit();
+	    	}
+	    	catch(Exception ex){
+	    		out.println("<b>there is a problem with adding a group</b>");
+		        out.println("<hr>" + ex.getMessage() + "<hr>");
+		        
+	    	}
+	    	out.println("<CENTER><h2>Group Created!</h2></CENTER>");
+	    	out.println("<FORM METHOD = link ACTION = edit_groups.jsp>");
+	    	out.println("<INPUT TYPE= submit VALUE = 'Add Members'>");
+	    	out.println("</FORM>");
+	    	out.println("</CENTER>");
+			
+	    }else{
+	    	out.println("<CENTER><h2>That Group Already Exists!</h2></CENTER>");
+	    	out.println("<CENTER><h3>Choose a New Group Name</h3></CENTER>");
+	    	
+	    }
         
 		
      }
