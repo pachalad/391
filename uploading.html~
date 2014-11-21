@@ -1,0 +1,7 @@
+<html>
+<head> Uploading pictures!</head>
+<form action=/proj1/home.html>
+    <input type="submit" value="Back to home">
+</form>
+
+</html>

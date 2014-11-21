@@ -1,0 +1,15 @@
+<html>
+<head> Home </head>
+<form name = "sendtoupload" action=/proj1/uploading.html>
+    <input type="submit" value="Upload">
+</form>
+<!-- This is going to be needed to change to the  --> 
+
+<form name="sendsearch" action="/proj1/home.html" method="post">
+Search: <input type="text" name="search_term">
+<input type="submit" value="Submit">
+</form> 
+
+</form> 
+</form>
+</html>

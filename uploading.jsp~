@@ -1,0 +1,53 @@
+<%@ page import="java.sql.*,java.util.*,java.text.*,java.net.*,javax.servlet.*,javax.servlet.http.*"%>
+<html>
+<head> Uploading pictures!</head>
+<hr>
+Please input or select the path of the image!
+<body>
+
+Add information to the picture! You need to click the bottom upload!<br>
+<form action="UploadInfo" method="post">
+Permission:<select name="permission">
+	  <% 	String username = "pachala";
+		String password = "Cheapradio1";
+		String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS ";
+		String driverName = "oracle.jdbc.driver.OracleDriver";
+		String query = "select group_name from groups";
+		String group;
+		Class drvClass = Class.forName(driverName);
+	        DriverManager.registerDriver((Driver) drvClass.newInstance());
+		Connection conn = DriverManager.getConnection(dbstring,username,password);
+		Statement stmt = conn.createStatement();
+		ResultSet rset = stmt.executeQuery(query);
+		while (rset.next()) {
+			group = rset.getObject(1).toString();
+		     	out.println("<option value="+'"'+group+'"'+'>'+group+"</option>");
+			 }
+		stmt.close();
+		conn.close();
+	%>
+	    </select><br>
+Subject:<input type="text" name="subject"><br>
+Place:<input type="text" name="place"><br>
+Description:<textarea name="description"></textarea><br>
+Date:<br>
+Year(YYYY format):<input type="text" name="year"><br>
+Month(MM format):<input type="text" name="month"><br>
+Day(DD format):<input type="text" name="day"><br>
+<input type="submit" name="submit" value="Upload">
+</form><br>
+
+<form action="UploadImage" method="post" enctype="multipart/form-data" >
+File path:<input name="file-path" type="file" size="30" ></input><br>
+<input type="submit" name="submit" value="Upload"><br>
+</form><br>
+
+Or upload a folder!<br>
+
+
+
+<form action=/proj1/home.html>
+    	<input type="submit" value="Back to home">
+</form>
+</body>
+</html>
