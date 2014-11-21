@@ -5,40 +5,15 @@
  http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
  version="2.4">
 
-    <servlet>
-        <servlet-name>FirstServlet</servlet-name>
-        <servlet-class>FirstServlet</servlet-class>
+ 
+        <servlet-name>PictureBrowse</servlet-name>
+        <servlet-class>PictureBrowse</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>FirstServlet</servlet-name>
-        <url-pattern>/firstservlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-    <servlet-name>Lab2Example</servlet-name>
-    <servlet-class>Asn2Sample</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Lab2Example</servlet-name>
-        <url-pattern>/Asn2Sample</url-pattern>
+        <servlet-name>PictureBrowse</servlet-name>
+        <url-pattern>/picturebrowse</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>SessionInfo</servlet-name>
-        <servlet-class>SessionInfo</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SessionInfo</servlet-name>
-        <url-pattern>/SessionInfo</url-pattern>
-    </servlet-mapping>
-    <servlet>
-    <servlet-name>URLSession</servlet-name>
-    <servlet-class>URLSession</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>URLSession</servlet-name>
-        <url-pattern>/URLSession</url-pattern>
-    </servlet-mapping>
-	
     <servlet>
         <servlet-name>UploadImage</servlet-name>
         <servlet-class>UploadImage</servlet-class>
@@ -73,4 +48,23 @@
        <servlet-name>MUploadInfo</servlet-name>
        <url-pattern>/MUploadInfo</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetOnePic</servlet-name>
+        <servlet-class>GetOnePic</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetOnePic</servlet-name>
+        <url-pattern>/GetOnePic</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetInfo</servlet-name>
+        <servlet-class>GetInfo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetInfo</servlet-name>
+        <url-pattern>/GetInfo</url-pattern>
+    </servlet-mapping>
+
 </web-app>

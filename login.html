@@ -1,0 +1,42 @@
+<HTML>
+<HEAD>
+<TITLE>Photosight</TITLE>
+</HEAD>
+
+<BODY>
+<!--This is the login page-->
+<H1><CENTER>Photosight</CENTER></H1>
+
+<CENTER><FORM NAME="LoginForm" ACTION="login.jsp" METHOD="post" >
+<CENTER><TABLE></CENTER>
+
+<TR VALIGN=TOP ALIGN=LEFT>
+<TD>Username:</TD>
+<TD><INPUT TYPE="text" NAME="USERID"><BR></TD>
+</TR>
+
+<TD>Password:</TD>
+<TD><INPUT TYPE="password" NAME="PASSWD"></TD>
+
+</TABLE>
+
+<CENTER><INPUT TYPE="submit" NAME="bSubmit" VALUE="Login"></CENTER>
+</FORM></CENTER>
+
+<Center>
+<FORM METHOD = "LINK" ACTION = "create_account.html">
+<INPUT TYPE="submit" VALUE="Register">
+</FORM>
+</CENTER>
+<!--
+<button id = "createAccountRedirect" Action = "create_account.html" >Create Account</button> 
+<script type="text/javascript">
+    document.getElementById("createAccountRedirect").onclick = function () {
+        location.href = "http://um12.cs.ualberta.ca:16280/proj1/create_account.html";
+    };
+</script>
+
+-->
+</BODY>
+</HTML>
+
