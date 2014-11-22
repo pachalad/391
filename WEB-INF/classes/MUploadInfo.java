@@ -24,8 +24,8 @@ public class MUploadInfo extends HttpServlet {
     public void doPost(HttpServletRequest request,HttpServletResponse response)
 	throws ServletException, IOException {
 	//  change the following parameters to connect to the oracle database
-	String username = "pachala";
-	String password = "Cheapradio1";
+	String username = "kboyle";
+	String password = "kieran92";
 	String drivername = "oracle.jdbc.driver.OracleDriver";
 	String dbstring ="jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
 	int number = Integer.valueOf(request.getParameter("numofphotos"));

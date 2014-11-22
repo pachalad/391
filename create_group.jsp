@@ -102,7 +102,7 @@ if (session.getAttribute("userID") == null) {
 		        out.println("<hr>" + ex.getMessage() + "<hr>");
 		        
 	    	}
-	    	out.println("<CENTER><h2>Group Created!</h2></CENTER>");
+	    	out.println("<CENTER><h2>Group Created!</h2>");
 	    	out.println("<FORM METHOD = link ACTION = edit_groups.jsp>");
 	    	out.println("<INPUT TYPE= submit VALUE = 'Add Members'>");
 	    	out.println("</FORM>");
