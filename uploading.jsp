@@ -7,11 +7,14 @@
 Add information to the picture! You need to click the bottom upload!<br>
 <form action="UploadInfo" method="post">
 Permission:<select name="permission">
-	  <% 	String username = "pachala";
+	  <% 
+	  	String userID = request.getParameter("userID");
+	  	out.println(" <input type=hidden name=userID value="+userID+"> ");
+	  	String username = "pachala";
 		String password = "Cheapradio1";
 		String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS ";
 		String driverName = "oracle.jdbc.driver.OracleDriver";
-		String query = "select group_name from groups"; //where user_name='"+userID+"' or group_id=1 or group_id=2";
+		String query = "select group_name from groups where user_name='"+userID+"' or group_id=1 or group_id=2";
 		String group;
 		Class drvClass = Class.forName(driverName);
 	    DriverManager.registerDriver((Driver) drvClass.newInstance());
