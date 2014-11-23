@@ -57,8 +57,22 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 		 *   to execute the given query
 		 */
 		try {
-			//TODO: get query from session
-		    String query = "select photo_id from images";
+			
+			String query;
+			
+			String requestQueryString  = request.getQueryString();
+		    if ("top".equals(requestQueryString) ) {
+				query = "SELECT photo_id FROM " +
+						"(SELECT photo_id, count(photo_id) " +
+						"FROM distinct_views GROUP BY photo_id " + 
+						"ORDER BY count(photo_id) desc) " +
+						"WHERE rownum <= 5"; 
+		    }
+		    
+		    else {
+				//TODO: get query from session
+		    	query = "SELECT photo_id FROM images";
+		    }
 	
 		    Connection conn = getConnected();
 		    Statement stmt = conn.createStatement();
