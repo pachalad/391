@@ -3,7 +3,7 @@
 <HEAD>
 
 
-<TITLE>Upload Photos</TITLE>
+<TITLE>Update Photos</TITLE>
 </HEAD>
 <body>
 
@@ -45,23 +45,52 @@
 			}
 		stmt1.close();
 		conn1.close();
-		out.println("</select><br>");
-		out.println("<input type='hidden' name='picID' value = " + picID +">");
-		out.println("Subject:<input type='text' name='subject' value='test'><br>");
-		out.println("Place:<input type='text' name='place'><br>");
-		out.println("Description:<textarea name='description'></textarea><br>");
-		out.println("Date:<br>");
-		out.println("Year(YYYY format):<input type='text' name='year'><br>");
-		out.println("Month(MM format):<input type='text' name='month'><br>");
-		out.println("Day(DD format):<input type='text' name='day'><br>");
-		out.println("<input type='submit' name='update' value='Update'><br>");
-		out.println("</form>");
-	
 		
-		out.println("</form><br>");
-		out.println("<form action=/Photosight/home.html>");
-		out.println("<input type='submit' value='Back to home'>");
-		out.println("</form>");
+		out.println("</select><br>");
+		
+		String infoQuery = "SELECT owner_name, subject, place, timing, description " +
+							"FROM images WHERE photo_id=" + picID;
+		Class drvClass2 = Class.forName(driverName);
+		DriverManager.registerDriver((Driver) drvClass2.newInstance());
+		Connection conn2 = DriverManager.getConnection(dbstring,username,password);
+		Statement stmt2 = conn2.createStatement();
+		ResultSet rset2 = stmt2.executeQuery(infoQuery);
+		
+        String owner_name, subject, place, timing, description, year, month, day;
+
+	    if ( rset2.next() ) {
+	    	owner_name = rset2.getString("owner_name");
+	    	subject = rset2.getString("subject");
+	        place = rset2.getString("place");
+	        timing = rset2.getString("timing");
+	        description = rset2.getString("description");
+	        
+	       	String delimiter = "-";
+	        String[] temp;
+	        temp = timing.split(delimiter);
+	        year = temp[0];
+	        month = temp[1];
+	        day = temp[2];
+	        
+			out.println("<input type='hidden' name='picID' value = " + picID +">");
+			out.println("Subject:<input type='text' name='subject' value="+subject+"><br>");
+			out.println("Place:<input type='text' name='place' value="+place+"><br>");
+			out.println("Description:<textarea name='description' > " + description +"</textarea><br>");
+			out.println("Date:<br>");
+			out.println("Year(YYYY format):<input type='text' name='year' value = " + year +"><br>");
+			out.println("Month(MM format):<input type='text' name='month' value = " + month +"><br>");
+			out.println("Day(DD format):<input type='text' name='day' value = " + day +"><br>");
+			out.println("<input type='submit' name='update' value='Update'><br>");
+			out.println("</form>");
+					
+			out.println("</form><br>");
+			out.println("<form action=/Photosight/home.html>");
+			out.println("<input type='submit' value='Back to home'>");
+			out.println("</form>");
+	    }
+		else {
+			out.println("<html> Pictures are not avialable</html>");
+		}
 	}
 %>
 </body>
