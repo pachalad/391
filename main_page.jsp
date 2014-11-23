@@ -29,19 +29,21 @@ if (session.getAttribute("userID") == null) {
 	*/
 	
 	response.sendRedirect("/Photosight/login.html");
-}
+} else {
 %>
 	<H1><CENTER>Photosight</CENTER></H1>
-	
 	<% 
 	out.println("<H3><CENTER>Hey "+userID+"!</CENTER></H3>");
 	%>
 	<H3><CENTER>What do You Want to Do?</CENTER></H3>
 	<CENTER>
-	<FORM METHOD = LINK ACTION = main_page.jsp>
-	<INPUT TYPE= submit VALUE= 'View Images'>
-	</FORM>
-	<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'><INPUT TYPE='submit' VALUE='Create Group'></FORM>
+	<a href="/Photosight/picturebrowse?top" style="text-decoration: none">
+   	<input type="submit" value="View Images" />
+	</a>
+	<br>
+	<br>
+	<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'>
+	<INPUT TYPE='submit' VALUE='Create Group'></FORM>
 	<FORM METHOD = LINK ACTION = edit_groups.jsp>
 	<INPUT TYPE= submit VALUE= 'Add Group Members'>
 	</FORM>
@@ -61,9 +63,9 @@ if (session.getAttribute("userID") == null) {
 	</FORM>
 	</CENTER>
 
-	
+<% 	
 }
-
+%> 
 
 
 
