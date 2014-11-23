@@ -35,6 +35,29 @@ if (session.getAttribute("userID") == null) {
 	
 	<% 
 	out.println("<H3><CENTER>Hey "+userID+"!</CENTER></H3>");
+<<<<<<< HEAD
+	out.println("<H3><CENTER>What do You Want to Do?</CENTER></H3>");
+	out.println("<CENTER>");
+	out.println("<FORM METHOD = LINK ACTION = main_page.jsp>");
+	out.println("<INPUT TYPE= submit VALUE= 'View Images'>");
+	out.println("</FORM>");
+	out.println("<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'><INPUT TYPE='submit' VALUE='Create Group'></FORM>");
+	out.println("<FORM METHOD = LINK ACTION = edit_groups.jsp>");
+	out.println("<INPUT TYPE= submit VALUE= 'Edit Groups'>");
+	out.println("</FORM>");
+	out.println("<FORM METHOD = LINK ACTION = uploading.jsp>");
+	out.println("<INPUT TYPE= submit VALUE='Upload Images'>");
+	out.println("</FORM>");
+	out.println("<FORM METHOD = LINK ACTION = main_page.jsp>");
+	out.println("<INPUT TYPE= submit VALUE= Search>");
+	out.println("</FORM>");
+	out.println("<FORM METHOD = LINK ACTION = main_page.jsp >");
+	out.println("<INPUT TYPE= submit VALUE= Logout>");
+	out.println("</FORM>");
+	out.println("<FORM METHOD = LINK ACTION = main_page.jsp>");
+	out.println("</FORM>");
+	out.println("</CENTER>");
+=======
 	%>
 	<H3><CENTER>What do You Want to Do?</CENTER></H3>
 	<CENTER>
@@ -57,6 +80,7 @@ if (session.getAttribute("userID") == null) {
 	<FORM METHOD = LINK ACTION = main_page.jsp>
 	</FORM>
 	</CENTER>
+>>>>>>> 768992f5650bc6ca4f22213b86d19c539c8cbde9
 	
 }
 
