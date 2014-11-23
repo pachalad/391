@@ -9,7 +9,7 @@
 
 <% 
 	Boolean print;
-	if (session.getAttribute("userID") == null) {
+if (session.getAttribute("userID") == null) {
     // Session is not created.
 	out.println("<CENTER>");    
     out.println("<h1>Photosight</h1>");
@@ -17,18 +17,16 @@
 	out.println("<INPUT TYPE= submit VALUE = Login>");
 	out.println("</FORM>");
 	out.println("</CENTER>");
-}else{
+} else{
 
-	//out.println("<b>Or upload a folder!</b><br>");
-	//out.println("<hr>");
 	out.println("<CENTER><h1>Photosight</h1>");
-	out.println("<h2>Uploading pictures!</h2>");
-	out.println("Add information to the picture! You need to click the bottom upload!<br></CENTER>");
-	out.println("<form action='MUploadInfo' method='post'>");
-	out.println("Number of photos:<input type='text' name='numofphotos'><br>");
+	out.println("<h2>Edit Picture Info</h2>");
+	out.println("Add information to the picture!<br></CENTER>");
+	out.println("<form action='UpdatePicture' method='post'>");
 	String userID = (String)session.getAttribute("userID");
-	out.println("<input tupe = hidden name = userID value = '"+userID+"'");
 	out.println(" <input type=hidden name=userID value="+userID+"> ");
+	String picID = request.getParameter("picID");
+	out.println(" <input type=hidden name=picID value="+picID+"> ");
 	String username = "kboyle";
 	String password = "kieran92";
 	String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS ";
@@ -48,6 +46,8 @@
 	stmt1.close();
 	conn1.close();
 	out.println("</select><br>");
+	out.println("<h3>picID = " + picID + "</h3>");
+	out.println("<input type='hidden' name='picID' value = " + picID +">");
 	out.println("Subject:<input type='text' name='subject'><br>");
 	out.println("Place:<input type='text' name='place'><br>");
 	out.println("Description:<textarea name='description'></textarea><br>");
@@ -55,13 +55,14 @@
 	out.println("Year(YYYY format):<input type='text' name='year'><br>");
 	out.println("Month(MM format):<input type='text' name='month'><br>");
 	out.println("Day(DD format):<input type='text' name='day'><br>");
-	out.println("<input type='submit' name='submit' value='Upload'><br>");
+	out.println("<input type='submit' name='update' value='Update'><br>");
 	out.println("</form>");
-	out.println("<form action='MUploadImage' method = 'post' enctype='multipart/form-data'>");
-	out.println("Please select the path of the images!<br>");
-	out.println("File Path:<input name='file-path' type='file' size='30' multiple='' ></input><br>");
-	out.println("<input type='submit' name='submit' value='Upload'><br>");
+
+	
 	out.println("</form><br>");
+	out.println("<form action=/Photosight/home.html>");
+	out.println("<input type='submit' value='Back to home'>");
+	out.println("</form>");
 }
 %>
 </body>

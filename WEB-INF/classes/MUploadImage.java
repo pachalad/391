@@ -87,7 +87,7 @@ public class MUploadImage extends HttpServlet {
 	    Statement stmt = conn.createStatement();
 	    ResultSet rset1 = stmt.executeQuery("SELECT max(photo_id) as photo_id from images");
 	    rset1.next();
-	    pic_id=rset1.getInt("photo_id");
+	    pic_id=rset1.getInt(1);
 	    pic_id= pic_id - j;	
 	    for(int k=0;k<j;k++){
 	
