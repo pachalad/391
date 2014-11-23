@@ -8,7 +8,6 @@ import oracle.jdbc.*;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import java.lang.Integer;
 
 /**
  *  The package commons-fileupload-1.0.jar is downloaded from 
@@ -19,7 +18,7 @@ import java.lang.Integer;
 import org.apache.commons.fileupload.DiskFileUpload;
 import org.apache.commons.fileupload.FileItem;
 
-public class MUploadInfo extends HttpServlet {
+public class UpdatePicture extends HttpServlet {
     public String response_message;
     public void doPost(HttpServletRequest request,HttpServletResponse response)
 	throws ServletException, IOException {
@@ -28,39 +27,51 @@ public class MUploadInfo extends HttpServlet {
 	String password = "kieran92";
 	String drivername = "oracle.jdbc.driver.OracleDriver";
 	String dbstring ="jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
-	int number = Integer.valueOf(request.getParameter("numofphotos"));
+	
+	HttpSession session = request.getSession(true);
+	
 	String permission = request.getParameter("permission");
 	String subject = request.getParameter("subject");
 	String year = request.getParameter("year");
 	String month = request.getParameter("month");
 	String day = request.getParameter("day");
-	String desc = request.getParameter("description");
+	String description = request.getParameter("description");
 	String place = request.getParameter("place");
-
 	String date = year+"-"+month+"-"+day;
-	String user = request.getParameter("userID");
+	String userID = (String) session.getAttribute("userID");
+    String pic_id = request.getParameter("picID");
 	int permissionint=0;
-	int pic_id = 0;
 
+	response.setContentType("text/html");
+	PrintWriter out = response.getWriter();
+	
+	out.println("<h3>picID = " + pic_id + "</h3>");
+	out.println("<h3>permission = " + permission + "</h3>");
+	out.println("<h3>subject = " + subject + "</h3>");
+	out.println("<h3>place = " + place + "</h3>");
+	out.println("<h3>date = " + date + "</h3>");
+	
 	try {
 	    
-            // Connect to the database and create a statement
+        // Connect to the database and create a statement
         Connection conn = getConnected(drivername,dbstring, username,password);
 	    Statement stmt = conn.createStatement();
-	    for(int i=0;i<number;i++){
-	    	ResultSet rset1 = stmt.executeQuery("SELECT pic_id_sequence.nextval from dual");
-	    	rset1.next();
-	    	pic_id = rset1.getInt(1);
 	    
-	    	rset1 = stmt.executeQuery("SELECT group_id from groups where group_name='"+permission+"'");
-	    	rset1.next();
-	    	permissionint = rset1.getInt(1);
+	    ResultSet rset1 = stmt.executeQuery("SELECT group_id from groups where group_name='"+permission+"'");
+	    rset1.next();
+	    permissionint = rset1.getInt(1);
+	    
+		out.println("<h3>permissionint = " + permissionint + "</h3>");
+ 
 	    //Insert an empty blob into the table first. Note that you have to 
 	    //use the Oracle specific function empty_blob() to create an empty blob
-	    	stmt.execute("INSERT INTO images VALUES("+pic_id+",'"+user+"',"+permissionint+",'"+subject+"','"+place+"',DATE '"+date+"','"+desc+"',empty_blob(),empty_blob())");
-			stmt.executeUpdate("commit");
-		}
-	    response_message = " Upload OK!  ";
+	    String statement = "UPDATE images " +
+	    					"SET permitted = " + permissionint + ", subject = '" + subject +
+	    					"', place = '" + place + "', timing = DATE '" + date + "', description = '" + description + "'" +
+	    					"WHERE photo_id = " + pic_id;
+	    stmt.execute(statement);
+        stmt.executeUpdate("commit");
+	    response_message = " Update OK!  ";
         conn.close();
 
 	} catch( Exception ex ) {
@@ -69,8 +80,7 @@ public class MUploadInfo extends HttpServlet {
 	}
 
 	//Output response to the client
-	response.setContentType("text/html");
-	PrintWriter out = response.getWriter();
+
 	out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " +
 		    "Transitional//EN\">\n" +
 		    "<HTML>\n" +

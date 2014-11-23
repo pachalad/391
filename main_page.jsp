@@ -19,57 +19,50 @@ String userKeyID = (String) session.getAttribute("userIDKey");
 //out.println("this is the user key"+userKeyID );
 if (session.getAttribute("userID") == null) {
     // Session is not created.
+	/*
 	out.println("<CENTER>");    
     out.println("<h1>Photosight</h1>");
 	out.println("<FORM METHOD = link ACTION = login.html>");
 	out.println("<INPUT TYPE= submit VALUE = Login>");
 	out.println("</FORM>");
 	out.println("</CENTER>");
-
-
-} else {
-	out.println("<H1><CENTER>Photosight</CENTER></H1>");
-	out.println("<H3><CENTER>Hey "+userID+"!</CENTER></H3>");
-	out.println("<H3><CENTER>What do You Want to Do?</CENTER></H3>");
-	out.println("<CENTER>");
-	out.println("<FORM METHOD = LINK ACTION = main_page.html>");
-	out.println("<INPUT TYPE= submit VALUE= 'View Images'>");
-	out.println("</FORM>");
-	out.println("<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'><INPUT TYPE='submit' VALUE='Create Group'></FORM>");
-	out.println("<FORM METHOD = LINK ACTION = main_page.html>");
-	out.println("<INPUT TYPE= submit VALUE= 'My Groups'>");
-	out.println("</FORM>");
-	out.println("<FORM METHOD = LINK ACTION = main_page.html>");
-	out.println("<INPUT TYPE= submit VALUE='Upload Images'>");
-	out.println("</FORM>");
-	out.println("<FORM METHOD = LINK ACTION = main_page.html>");
-	out.println("<INPUT TYPE= submit VALUE= Search>");
-	out.println("</FORM>");
-	out.println("<FORM METHOD = LINK ACTION = main_page.html >");
-	out.println("<INPUT TYPE= submit VALUE= Logout>");
-	out.println("</FORM>");
-	out.println("<FORM METHOD = LINK ACTION = main_page.html >");
-	out.println("</FORM>");
-	out.println("</CENTER>");
+	*/
 	
-	out.println();
-//	out.println();
-//	out.println();	
-//	out.println();
-//	out.println();
-//	out.println();
-//	out.println();
-
-
-    // Session is already created.
+	response.sendRedirect("/Photosight/login.html");
+}
+%>
+	<H1><CENTER>Photosight</CENTER></H1>
+	
+	<% 
+	out.println("<H3><CENTER>Hey "+userID+"!</CENTER></H3>");
+	%>
+	<H3><CENTER>What do You Want to Do?</CENTER></H3>
+	<CENTER>
+	<FORM METHOD = LINK ACTION = main_page.jsp>
+	<INPUT TYPE= submit VALUE= 'View Images'>
+	</FORM>
+	<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'><INPUT TYPE='submit' VALUE='Create Group'></FORM>
+	<FORM METHOD = LINK ACTION = main_page.jsp>
+	<INPUT TYPE= submit VALUE= 'My Groups'>
+	</FORM>
+	<FORM METHOD = LINK ACTION = uploading.jsp>
+	<INPUT TYPE= submit VALUE='Upload Images'>
+	</FORM>
+	<FORM METHOD = LINK ACTION = main_page.jsp>
+	<INPUT TYPE= submit VALUE= Search>
+	</FORM>
+	<FORM METHOD = LINK ACTION = main_page.jsp >
+	<INPUT TYPE= submit VALUE= Logout>
+	</FORM>
+	<FORM METHOD = LINK ACTION = main_page.jsp>
+	</FORM>
+	</CENTER>
+	
 }
 
 
 
-//E696B98B86C51816953CE8AD841766E5
 
 
-
-%>
 </BODY>
 </HTML>

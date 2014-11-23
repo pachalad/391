@@ -93,13 +93,18 @@ public class GetInfo extends HttpServlet
 			    	
 			    	//if they haven't, add them to the viwed table
 					if ( count == 0 ) {
-						out.println("<h3> not found </h3>");
 		                PreparedStatement viewed_stmt = conn.prepareStatement(
 		                        "insert into distinct_views (photo_id, user_id) " +
 		                    	"values (" + picid + ", '" + userID +"')" );
 		
 		                viewed_stmt.executeUpdate();
 		                viewed_stmt.executeUpdate("commit");	
+					}
+					
+					if (owner_name.equals(userID)) {
+						out.println("<FORM METHOD = LINK ACTION = update_picture.jsp?>");
+						out.println("<input type='hidden' name='picID' value = " + picid +">");
+						out.println("<INPUT TYPE= submit VALUE= Update Info>");
 					}
 					
 		        } else {
