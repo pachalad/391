@@ -45,12 +45,6 @@ public class UpdatePicture extends HttpServlet {
 	response.setContentType("text/html");
 	PrintWriter out = response.getWriter();
 	
-	out.println("<h3>picID = " + pic_id + "</h3>");
-	out.println("<h3>permission = " + permission + "</h3>");
-	out.println("<h3>subject = " + subject + "</h3>");
-	out.println("<h3>place = " + place + "</h3>");
-	out.println("<h3>date = " + date + "</h3>");
-	
 	try {
 	    
         // Connect to the database and create a statement
@@ -84,7 +78,7 @@ public class UpdatePicture extends HttpServlet {
 	out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " +
 		    "Transitional//EN\">\n" +
 		    "<HTML>\n" +
-		    "<HEAD><TITLE>Upload Message</TITLE></HEAD>\n" +
+		    "<HEAD><TITLE>Update Picture</TITLE></HEAD>\n" +
 		    "<BODY>\n" +
 		    "<H1>" +
 		            response_message + 

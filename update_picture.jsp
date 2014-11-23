@@ -46,9 +46,8 @@ if (session.getAttribute("userID") == null) {
 	stmt1.close();
 	conn1.close();
 	out.println("</select><br>");
-	out.println("<h3>picID = " + picID + "</h3>");
 	out.println("<input type='hidden' name='picID' value = " + picID +">");
-	out.println("Subject:<input type='text' name='subject'><br>");
+	out.println("Subject:<input type='text' name='subject' value='test'><br>");
 	out.println("Place:<input type='text' name='place'><br>");
 	out.println("Description:<textarea name='description'></textarea><br>");
 	out.println("Date:<br>");
