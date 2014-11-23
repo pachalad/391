@@ -36,8 +36,8 @@ if (session.getAttribute("userID") == null) {
 	out.println("<INPUT TYPE= submit VALUE= 'View Images'>");
 	out.println("</FORM>");
 	out.println("<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'><INPUT TYPE='submit' VALUE='Create Group'></FORM>");
-	out.println("<FORM METHOD = LINK ACTION = main_page.jsp>");
-	out.println("<INPUT TYPE= submit VALUE= 'My Groups'>");
+	out.println("<FORM METHOD = LINK ACTION = edit_groups.jsp>");
+	out.println("<INPUT TYPE= submit VALUE= 'Edit Groups'>");
 	out.println("</FORM>");
 	out.println("<FORM METHOD = LINK ACTION = uploading.jsp>");
 	out.println("<INPUT TYPE= submit VALUE='Upload Images'>");
