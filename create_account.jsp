@@ -122,7 +122,7 @@
 				out.println("</FORM></CENTER>");
 			}else{
 				out.println("<CENTER><h1>Photosight</h1></CENTER>");
-				out.println("<CENTER>Sorry that username has been taken, please enter a new one!</CENTER>");
+				out.println("<CENTER>Sorry that username has been taken, please enter a new one!");
 				out.println("<FORM action = create_account.jsp method = post>");
 				out.println("<Table>");
 				out.println("<TR VALIGN=TOP ALIGN=LEFT>");

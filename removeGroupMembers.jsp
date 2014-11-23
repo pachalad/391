@@ -2,7 +2,7 @@
 <HEAD>
 
 
-<TITLE>Add Group Members</TITLE>
+<TITLE>Remove Group Members</TITLE>
 </HEAD>
 
 <BODY>
@@ -21,22 +21,19 @@ if (session.getAttribute("userID") == null) {
 
 
 } else {
-	//out.println("the session user is: "+userID);
-	out.println("<form method=post action= edit_groups.jsp>");
+	out.println("<form method=post action= removeGroupMembers.jsp>");
 	out.println("<H1><CENTER>Photosight</CENTER></H1>");
-	out.println("<H2><CENTER>Add Group Members</CENTER></H2>");
+	out.println("<H2><CENTER>Remove Group Members</CENTER></H2>");
 	//out.println("Hey "+userID+"!");
 	//out.println("Let's edit some groups");
-	out.println("Enter the group Name of which you need to edit: <input type=text name = GROUPNAME maxlength=20><br>");
-	out.println("Enter the person who you wish to add: <input type=text name = PERSON maxlength=20><br>");
-	out.println("Notice:<textarea name=DESCRIPTION maxlength = 1024></textarea> <br>");
-	out.println("<input type=submit name=bAddPerson value=ADD!><br>");
+	out.println("Enter the group name of which you need to remove someone from: <input type=text name = GROUPNAME maxlength=20><br>");
+	out.println("Enter the Person who you wish to remove: <input type=text name = PERSON maxlength=20><br>");
+	out.println("<input type=submit name=bRemovePerson value=Remove!><br>");
 	out.println("</form>");
-	if(request.getParameter("bAddPerson") != null)
+	if(request.getParameter("bRemovePerson") != null)
     {
 		String groupName = (request.getParameter("GROUPNAME")).trim();
 		String groupUserID = (request.getParameter("PERSON")).trim();
-		String notice = (request.getParameter("DESCRIPTION")).trim();
 		Connection conn = null;
 		String driverName = "oracle.jdbc.driver.OracleDriver";
         String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
@@ -95,7 +92,7 @@ if (session.getAttribute("userID") == null) {
 		}
 		if(existingGroup != null && existingPerson != null){
 			stmt = null;
-			sql = "INSERT INTO group_lists VALUES("+existingGroup+",'"+existingPerson+"',sysdate,'"+notice+"')";
+			sql = "DELETE FROM group_lists WHERE group_id = "+existingGroup+" AND friend_id ='"+existingPerson+"' ";
 	    	try{
 	        	stmt = conn.createStatement();
 		        stmt.executeUpdate(sql);
@@ -106,7 +103,7 @@ if (session.getAttribute("userID") == null) {
 	        	out.println("<b>there is a problem with adding a person into a group</b>");
 		        out.println("<hr>" + ex.getMessage() + "<hr>");
 	    	}
-	    	out.println("<CENTER><h2>"+existingPerson+" has been added to "+groupName+"</h2>");
+	    	out.println("<CENTER><h2>"+existingPerson+" has been removed from "+groupName+"</h2>");
 	    	out.println("<FORM METHOD = link ACTION = edit_groups.jsp>");
 	    	out.println("</FORM>");
 	    	out.println("</CENTER>");
