@@ -5,7 +5,8 @@
  http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
  version="2.4">
 
- 
+ <servlet>
+
         <servlet-name>PictureBrowse</servlet-name>
         <servlet-class>PictureBrowse</servlet-class>
     </servlet>
@@ -14,57 +15,66 @@
         <url-pattern>/picturebrowse</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>UploadImage</servlet-name>
-        <servlet-class>UploadImage</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UploadImage</servlet-name>
-        <url-pattern>/UploadImage</url-pattern>
-    </servlet-mapping>
+<servlet>
+    <servlet-name>UploadImage</servlet-name>
+    <servlet-class>UploadImage</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>UploadImage</servlet-name>
+    <url-pattern>/UploadImage</url-pattern>
+</servlet-mapping>
 
-    <servlet>
-        <servlet-name>UploadInfo</servlet-name>
-        <servlet-class>UploadInfo</servlet-class>
-    </servlet>
-    <servlet-mapping>
-       <servlet-name>UploadInfo</servlet-name>
-       <url-pattern>/UploadInfo</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>MUploadImage</servlet-name>
-        <servlet-class>MUploadImage</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MUploadImage</servlet-name>
-        <url-pattern>/MUploadImage</url-pattern>
-    </servlet-mapping>
+<servlet>
+    <servlet-name>UploadInfo</servlet-name>
+    <servlet-class>UploadInfo</servlet-class>
+</servlet>
+<servlet-mapping>
+   <servlet-name>UploadInfo</servlet-name>
+   <url-pattern>/UploadInfo</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>MUploadImage</servlet-name>
+    <servlet-class>MUploadImage</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>MUploadImage</servlet-name>
+    <url-pattern>/MUploadImage</url-pattern>
+</servlet-mapping>
 
-    <servlet>
-        <servlet-name>MUploadInfo</servlet-name>
-        <servlet-class>MUploadInfo</servlet-class>
-    </servlet>
-    <servlet-mapping>
-       <servlet-name>MUploadInfo</servlet-name>
-       <url-pattern>/MUploadInfo</url-pattern>
-    </servlet-mapping>
+<servlet>
+    <servlet-name>MUploadInfo</servlet-name>
+    <servlet-class>MUploadInfo</servlet-class>
+</servlet>
+<servlet-mapping>
+   <servlet-name>MUploadInfo</servlet-name>
+   <url-pattern>/MUploadInfo</url-pattern>
+</servlet-mapping>
 
-    <servlet>
-        <servlet-name>GetOnePic</servlet-name>
-        <servlet-class>GetOnePic</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>GetOnePic</servlet-name>
-        <url-pattern>/GetOnePic</url-pattern>
-    </servlet-mapping>
+<servlet>
+    <servlet-name>GetOnePic</servlet-name>
+    <servlet-class>GetOnePic</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>GetOnePic</servlet-name>
+    <url-pattern>/GetOnePic</url-pattern>
+</servlet-mapping>
 
-    <servlet>
-        <servlet-name>GetInfo</servlet-name>
-        <servlet-class>GetInfo</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>GetInfo</servlet-name>
-        <url-pattern>/GetInfo</url-pattern>
-    </servlet-mapping>
+<servlet>
+    <servlet-name>GetInfo</servlet-name>
+    <servlet-class>GetInfo</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>GetInfo</servlet-name>
+    <url-pattern>/GetInfo</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>UpdatePicture</servlet-name>
+    <servlet-class>UpdatePicture</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>UpdatePicture</servlet-name>
+    <url-pattern>/UpdatePicture</url-pattern>
+</servlet-mapping>
 
 </web-app>

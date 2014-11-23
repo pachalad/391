@@ -6,13 +6,14 @@
  version="2.4">
 
  <servlet>
-    <servlet-name>PictureBrowse</servlet-name>
-    <servlet-class>PictureBrowse</servlet-class>
-</servlet>
-<servlet-mapping>
-    <servlet-name>PictureBrowse</servlet-name>
-    <url-pattern>/picturebrowse</url-pattern>
-</servlet-mapping>
+
+        <servlet-name>PictureBrowse</servlet-name>
+        <servlet-class>PictureBrowse</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PictureBrowse</servlet-name>
+        <url-pattern>/picturebrowse</url-pattern>
+    </servlet-mapping>
 
 <servlet>
     <servlet-name>UploadImage</servlet-name>
