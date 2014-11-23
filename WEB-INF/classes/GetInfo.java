@@ -79,7 +79,7 @@ public class GetInfo extends HttpServlet
 			                "<h3>Subject: " + subject +" </h3>" +
 			                "<h3>Location: " + place + " </h3>" +
 			                "<h3>Owner: " + owner_name + " </h3>" +
-							"<h3>Date: " + timing + " </h3>" +
+							"<h3>Date: " + timing.substring(0, 10) + " </h3>" +
 							"<h3>Description: " + description + " </h3>" +
 							"</body></html>");
 

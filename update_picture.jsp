@@ -75,17 +75,12 @@
 			out.println("<input type='hidden' name='picID' value = " + picID +">");
 			out.println("Subject:<input type='text' name='subject' value="+subject+"><br>");
 			out.println("Place:<input type='text' name='place' value="+place+"><br>");
-			out.println("Description:<textarea name='description' > " + description +"</textarea><br>");
+			out.println("Description:<textarea name='description'>"+description+"</textarea><br>");
 			out.println("Date:<br>");
 			out.println("Year(YYYY format):<input type='text' name='year' value = " + year +"><br>");
 			out.println("Month(MM format):<input type='text' name='month' value = " + month +"><br>");
 			out.println("Day(DD format):<input type='text' name='day' value = " + day +"><br>");
 			out.println("<input type='submit' name='update' value='Update'><br>");
-			out.println("</form>");
-					
-			out.println("</form><br>");
-			out.println("<form action=/Photosight/home.html>");
-			out.println("<input type='submit' value='Back to home'>");
 			out.println("</form>");
 	    }
 		else {
