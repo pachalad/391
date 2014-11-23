@@ -39,7 +39,13 @@ if (session.getAttribute("userID") == null) {
 	<H3><CENTER>What do You Want to Do?</CENTER></H3>
 	<CENTER>
 	<FORM METHOD = LINK ACTION = main_page.jsp>
+	<INPUT TYPE= submit VALUE= Search>
+	</FORM>
+	<FORM METHOD = LINK ACTION = main_page.jsp>
 	<INPUT TYPE= submit VALUE= 'View Images'>
+	</FORM>
+	<FORM METHOD = LINK ACTION = uploading.jsp>
+	<INPUT TYPE= submit VALUE='Upload Images'>
 	</FORM>
 	<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'><INPUT TYPE='submit' VALUE='Create Group'></FORM>
 	<FORM METHOD = LINK ACTION = edit_groups.jsp>
@@ -48,13 +54,10 @@ if (session.getAttribute("userID") == null) {
 	<FORM METHOD = LINK ACTION = removeGroupMembers.jsp>
 	<INPUT TYPE= submit VALUE= 'Remove Group Members'>
 	</FORM>
-	<FORM METHOD = LINK ACTION = uploading.jsp>
-	<INPUT TYPE= submit VALUE='Upload Images'>
+	<FORM METHOD = LINK ACTION = edit_account.jsp >
+	<INPUT TYPE= submit VALUE= 'Edit Account'>
 	</FORM>
-	<FORM METHOD = LINK ACTION = main_page.jsp>
-	<INPUT TYPE= submit VALUE= Search>
-	</FORM>
-	<FORM METHOD = LINK ACTION = main_page.jsp >
+	<FORM METHOD = LINK ACTION = logoutPage.jsp >
 	<INPUT TYPE= submit VALUE= Logout>
 	</FORM>
 	<FORM METHOD = LINK ACTION = main_page.jsp>
