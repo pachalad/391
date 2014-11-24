@@ -110,9 +110,15 @@ public class MUploadImage extends HttpServlet {
 
 	    //Write the image to the blob object
 	    	OutputStream outstream = mypictureblob.getBinaryOutputStream();
-	    	ImageIO.write(img, "jpg", outstream);
 	    	OutputStream outstream1 = mythumbnailblob.getBinaryOutputStream();
+	    	try{
+	    	ImageIO.write(img, "jpg", outstream);
             ImageIO.write(thumbNail,"jpg", outstream1);
+	    	}catch(Exception e){}
+	    	try{
+	    		ImageIO.write(img, "gif", outstream);
+	    		ImageIO.write(thumbNail,"gif", outstream1);
+	    	}catch(Exception e){}
             pic_id++;
 	
 	    
