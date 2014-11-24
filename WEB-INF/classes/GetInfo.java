@@ -79,7 +79,7 @@ public class GetInfo extends HttpServlet
 			                "<h3>Subject: " + subject +" </h3>" +
 			                "<h3>Location: " + place + " </h3>" +
 			                "<h3>Owner: " + owner_name + " </h3>" +
-							"<h3>Date: " + timing + " </h3>" +
+							"<h3>Date: " + timing.substring(0, 10) + " </h3>" +
 							"<h3>Description: " + description + " </h3>" +
 							"</body></html>");
 
@@ -115,13 +115,13 @@ public class GetInfo extends HttpServlet
 			}
 			// to close the connection
 			finally {
-			    try {
-				conn.close();
+				try {
+			    	conn.close();
 			    } catch ( SQLException ex) {
-				out.println( ex.getMessage() );
+			    	out.println( ex.getMessage() );
 			    }
 			}
-		    }
+		}
     	
     }
 
@@ -135,11 +135,11 @@ public class GetInfo extends HttpServlet
             /* one may replace the following for the specified database */
     	String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
     	String driverName = "oracle.jdbc.driver.OracleDriver";
-	/*
-	 *  to connect to the database
-	 */
-	Class drvClass = Class.forName(driverName); 
-	DriverManager.registerDriver((Driver) drvClass.newInstance());
-	return( DriverManager.getConnection(dbstring,username,password) );
-    }
+		/*
+		 *  to connect to the database
+		 */
+		Class drvClass = Class.forName(driverName); 
+		DriverManager.registerDriver((Driver) drvClass.newInstance());
+		return( DriverManager.getConnection(dbstring,username,password) );
+	}
 }

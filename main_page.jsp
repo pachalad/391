@@ -19,15 +19,6 @@ String userKeyID = (String) session.getAttribute("userIDKey");
 //out.println("this is the user key"+userKeyID );
 if (session.getAttribute("userID") == null) {
     // Session is not created.
-	/*
-	out.println("<CENTER>");    
-    out.println("<h1>Photosight</h1>");
-	out.println("<FORM METHOD = link ACTION = login.html>");
-	out.println("<INPUT TYPE= submit VALUE = Login>");
-	out.println("</FORM>");
-	out.println("</CENTER>");
-	*/
-	
 	response.sendRedirect("/Photosight/login.html");
 } else {
 %>
@@ -48,7 +39,7 @@ if (session.getAttribute("userID") == null) {
 	<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'><INPUT TYPE='submit' VALUE='Create Group'></FORM>
 
 	<a href="/Photosight/picturebrowse?top" style="text-decoration: none">
-   	<input type="submit" value="View Images" />
+   	<input type="submit" value="View Top Images" />
 	</a>
 	<br>
 	<br>
