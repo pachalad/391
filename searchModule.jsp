@@ -40,13 +40,50 @@
       Enter the keywords you would like to search for, seperated by commas.
       <br>
       e.g.: parrot, cannonball, pirate ship
-      
+      <br>
+
       <form name=search method=post action=searchModule.jsp> 
       <table>
-        <tr>
-          <td>
-            <input type=text name=searchTerm>
-          </td>
+      	<tr>
+      		<td>
+            	<input type=text name=searchTerm>
+          	</td>
+        </tr>
+      	<tr>
+			<td>
+      			Display results from after (must enter all or none):
+      		</td>
+      	</tr>
+      	<tr>
+      		<td>
+				Year:  <input type='text' name='fromYear'>
+				Month: <input type='text' name='fromMonth'>
+				Day:   <input type='text' name='fromDay'>
+				(Leave blank to search from the beginning of time)
+			</td>
+		</tr>
+		<tr>
+			<td>
+      			Display results from before (must enter all or none):
+      		</td>
+      	</tr>
+      	<tr>
+      		<td>
+				Year (YYYY):  <input type='text' name='toYear'>
+				Month (MM): <input type='text' name='toMonth'>
+				Day (DD):   <input type='text' name='toDay'>
+				(Leave blank to search to the end of the universe)
+			</td>
+		</tr>
+		<tr>
+      		<td>
+	      		Rank by: <select name='rank_by'>
+	      		<option value='frequency'>Term Frequency</option>
+	      		<option value='recent_first'>Most Recent First</option>
+	      		<option value='recent_last'>Most Recent Last</option>
+      		</td>
+      	</tr>
+		<tr>
           <td>
             <input type=submit value="Search" name="search">
           </td>
@@ -72,6 +109,7 @@
             	
             	int count = searchTerms.size();
             	
+            	//adapted from http://sqlmag.com/t-sql/counting-instances-word-record accessed Nov 20th, 2014
             	
             	query += "( ";
             	for (int i = 0; i < count - 1; i++) {
@@ -101,7 +139,32 @@
 	      				 ") AS descriptionFreq ";
 				
 	      		query += "FROM images " +
-            			 "ORDER BY (subjectFreq + placeFreq + descriptionFreq) DESC";
+	      				 "WHERE ";
+	           	
+	      		for (int i = 0; i < count - 1; i++) {
+	           		term = searchTerms.get(i).trim();
+	            	query += "(contains(subject, '" + term + "') > 0) OR " +
+	            			 "(contains(place, '" + term + "') > 0) OR " +
+	            			 "(contains(description, '" + term + "') > 0) OR ";
+	           	}
+				term = searchTerms.get(count - 1).trim();
+	      		query += "(contains(subject, '" + term + "') > 0) OR " +
+           			 	 "(contains(place, '" + term + "') > 0) OR " +
+           			 	 "(contains(description, '" + term + "') > 0) ";
+            	
+	            if ( !(request.getParameter("fromYear").equals("")) && !(request.getParameter("fromMonth").equals("")) 
+	            	  && !(request.getParameter("fromDay").equals("")) ) {
+	            	query += "AND timing >= CAST('"+request.getParameter("fromYear")+"/"+
+	            			request.getParameter("fromMonth")+"/"+request.getParameter("fromDay")+"' AS datetime) ";
+	            }
+	            
+	            if ( !(request.getParameter("toYear").equals("")) && !(request.getParameter("toMonth").equals("")) 
+		            	  && !(request.getParameter("toDay").equals("")) ) {
+		            	query += "AND timing <= to_date('"+request.getParameter("toYear")+"-"+
+		            	  			request.getParameter("toMonth")+"-"+request.getParameter("toDay")+"','yyyy-mm-dd') ";
+		        }
+           			 	 
+           		query += "ORDER BY (subjectFreq + placeFreq + descriptionFreq) DESC";
 	      		
             	out.println(query);
               	PreparedStatement doSearch = m_con.prepareStatement(query);
