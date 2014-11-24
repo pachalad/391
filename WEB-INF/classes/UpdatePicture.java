@@ -31,12 +31,12 @@ public class UpdatePicture extends HttpServlet {
 	HttpSession session = request.getSession(true);
 	
 	String permission = request.getParameter("permission");
-	String subject = request.getParameter("subject");
+	String subject = request.getParameter("subject") + ' ';
 	String year = request.getParameter("year");
 	String month = request.getParameter("month");
 	String day = request.getParameter("day");
-	String description = request.getParameter("description");
-	String place = request.getParameter("place");
+	String description = request.getParameter("description") + ' ';
+	String place = request.getParameter("place") + ' ';
 	String date = year+"-"+month+"-"+day;
 	String userID = (String) session.getAttribute("userID");
     String pic_id = request.getParameter("picID");
@@ -54,8 +54,6 @@ public class UpdatePicture extends HttpServlet {
 	    ResultSet rset1 = stmt.executeQuery("SELECT group_id from groups where group_name='"+permission+"'");
 	    rset1.next();
 	    permissionint = rset1.getInt(1);
-	    
-		out.println("<h3>permissionint = " + permissionint + "</h3>");
  
 	    //Insert an empty blob into the table first. Note that you have to 
 	    //use the Oracle specific function empty_blob() to create an empty blob

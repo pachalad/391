@@ -28,12 +28,12 @@ public class UploadInfo extends HttpServlet {
 	String drivername = "oracle.jdbc.driver.OracleDriver";
 	String dbstring ="jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
 	String permission = request.getParameter("permission");
-	String subject = request.getParameter("subject");
+	String subject = request.getParameter("subject") + ' ';
 	String year = request.getParameter("year");
 	String month = request.getParameter("month");
 	String day = request.getParameter("day");
-	String desc = request.getParameter("description");
-	String place = request.getParameter("place");
+	String desc = request.getParameter("description") + ' ';
+	String place = request.getParameter("place") + ' ';
 	String date = year+"-"+month+"-"+day;
 	String user = "dummy";
 	int permissionint=0;

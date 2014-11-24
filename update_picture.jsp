@@ -73,9 +73,9 @@
 	        day = temp[2];
 	        
 			out.println("<input type='hidden' name='picID' value = " + picID +">");
-			out.println("Subject:<input type='text' name='subject' value="+subject+"><br>");
-			out.println("Place:<input type='text' name='place' value="+place+"><br>");
-			out.println("Description:<textarea name='description'>"+description+"</textarea><br>");
+			out.println("Subject:<textarea name='subject'>"+subject.trim()+"</textarea><br>");
+			out.println("Place:<textarea name='Place'>"+place.trim()+"</textarea><br>");
+			out.println("Description:<textarea name='description'>"+description.trim()+"</textarea><br>");
 			out.println("Date:<br>");
 			out.println("Year(YYYY format):<input type='text' name='year' value = " + year +"><br>");
 			out.println("Month(MM format):<input type='text' name='month' value = " + month +"><br>");
