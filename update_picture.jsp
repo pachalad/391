@@ -74,7 +74,7 @@
 	        
 			out.println("<input type='hidden' name='picID' value = " + picID +">");
 			out.println("Subject:<textarea name='subject'>"+subject.trim()+"</textarea><br>");
-			out.println("Place:<textarea name='Place'>"+place.trim()+"</textarea><br>");
+			out.println("Place:<textarea name='place'>"+place.trim()+"</textarea><br>");
 			out.println("Description:<textarea name='description'>"+description.trim()+"</textarea><br>");
 			out.println("Date:<br>");
 			out.println("Year(YYYY format):<input type='text' name='year' value = " + year +"><br>");
