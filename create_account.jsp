@@ -45,8 +45,7 @@
 			String driverName = "oracle.jdbc.driver.OracleDriver";
 	        String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
 		
-		        
-				try{
+		        try{
 			        //load and register the driver
 	        		Class drvClass = Class.forName(driverName); 
 		        	DriverManager.registerDriver((Driver) drvClass.newInstance());

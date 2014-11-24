@@ -52,9 +52,7 @@ if (session.getAttribute("userID") == null) {
 	<FORM METHOD = LINK ACTION = removeGroupMembers.jsp>
 	<INPUT TYPE= submit VALUE= 'Remove Group Members'>
 	</FORM>
-	<FORM METHOD = LINK ACTION = edit_account.jsp >
-	<INPUT TYPE= submit VALUE= 'Edit Account'>
-	</FORM>
+
 	<FORM METHOD = LINK ACTION = logoutPage.jsp >
 	<INPUT TYPE= submit VALUE= Logout>
 	</FORM>
