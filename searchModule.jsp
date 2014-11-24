@@ -17,8 +17,6 @@
       String addItemError = "";
       
       Connection m_con;
-      String createString;
-      String selectString = "select itemName, description from item";
       Statement stmt;
       
       try {
@@ -39,7 +37,10 @@
       Query the database to see relevant items
       <br>
       <br>
-      Enter the keywords you would like to search for.
+      Enter the keywords you would like to search for, seperated by commas.
+      <br>
+      e.g.: parrot, cannonball, pirate ship
+      
       <form name=search method=post action=searchModule.jsp> 
       <table>
         <tr>
