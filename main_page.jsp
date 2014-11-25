@@ -71,6 +71,9 @@ if (userID.equals("admin")){
 }
 	
 %>
+	<FORM METHOD = LINK ACTION = helpPage.html >
+	<INPUT TYPE= submit VALUE= Help>
+	</FORM>
 
 	<FORM METHOD = LINK ACTION = logoutPage.jsp >
 	<INPUT TYPE= submit VALUE= Logout>
