@@ -30,8 +30,18 @@ if (session.getAttribute("userID") == null) {
 	<H3><CENTER>What do You Want to Do?</CENTER></H3>
 	<CENTER>
 
-	<FORM METHOD = LINK ACTION = main_page.jsp>
-	<INPUT TYPE= submit VALUE= Search>
+	<a href="/Photosight/PictureBrowse?top" style="text-decoration: none">
+   	<input type="submit" value="View Top Images" />
+	</a>
+	<br>
+	<br>
+
+	<FORM METHOD = LINK ACTION = 'PictureBrowse'>
+	<INPUT TYPE= submit VALUE= 'View All Images'>
+	</FORM>
+
+	<FORM METHOD = LINK ACTION = 'searchModule.jsp'>
+	<INPUT TYPE= submit VALUE= 'Search For Images'>
 	</FORM>
 
 	<FORM METHOD = LINK ACTION = uploading.jsp>
@@ -42,11 +52,6 @@ if (session.getAttribute("userID") == null) {
 	<INPUT TYPE='submit' VALUE='Create Group'>
 	</FORM>
 
-	<a href="/Photosight/picturebrowse?top" style="text-decoration: none">
-   	<input type="submit" value="View Top Images" />
-	</a>
-	<br>
-	<br>
 	<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'>
 	<INPUT TYPE='submit' VALUE='Create Group'></FORM>
 

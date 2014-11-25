@@ -67,20 +67,35 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 			
 			String requestQueryString  = request.getQueryString();
 		    if ("top".equals(requestQueryString) ) {
-				query = "SELECT photo_id FROM " +
-						"(SELECT photo_id, count(photo_id) " +
-						"FROM distinct_views GROUP BY photo_id " + 
-						"ORDER BY count(photo_id) desc) " +
-						"WHERE rownum <= 5"; 
+				query = "SELECT DISTINCT photo_id " +
+						"FROM (SELECT images.photo_id, count(images.photo_id) " +
+							  "FROM distinct_views, images, group_lists " +
+							  "WHERE (images.permitted = group_lists.group_id " +
+							  "AND group_lists.friend_id = '" + userID +"') " +
+							  "OR images.permitted = 1 " +
+							  "OR images.owner_name = '" + userID +"' " +
+							  "GROUP BY images.photo_id " +
+							  "ORDER BY count(photo_id) desc) " +
+							  "WHERE rownum <= 5 ";
 		    }
 		    
-		    else {
+		    else if ( !(session.getAttribute("QUERY") == null ) ){
 				//TODO: get query from session
 		    	//query = "SELECT photo_id FROM images";
 		    	query = (String) session.getAttribute("QUERY");
+		    } else {
+				query = "SELECT DISTINCT images.photo_id " +
+						"FROM images, group_lists " +
+						"WHERE (images.permitted = group_lists.group_id " +
+						      "AND group_lists.friend_id = '" + userID +"' ) " +
+						  "OR images.permitted = 1 " +
+						  "OR images.owner_name = '" + userID +"' ";
+				
+				
 		    }
 	
            	out.println(query);
+           	out.println("<br><br>");
 		    
 		    Connection conn = getConnected();
 		    Statement stmt = conn.createStatement();

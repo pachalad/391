@@ -43,7 +43,7 @@ public class Search extends HttpServlet implements SingleThreadModel {
 		/*
 		 *   to execute the given query
 		 */
-		String query = "SELECT photo_id, subject, place, description, ";
+		String query = "SELECT DISTINCT photo_id, ";
       	
         if(!(request.getParameter("searchTerm").equals(""))) {
         	
@@ -86,8 +86,12 @@ public class Search extends HttpServlet implements SingleThreadModel {
            	query += "( ((LENGTH(description) - LENGTH(REPLACE(description, '" + term + "', '')))/LENGTH('"+term+"') ) )" +
       				 ") AS descriptionFreq ";
 			
-      		query += "FROM images " +
-      				 "WHERE (";
+      		query += "FROM images, group_lists " +
+      				 "WHERE (images.permitted = group_lists.group_id " +
+				      	"AND group_lists.friend_id = '" + userID +"' ) " +
+				      	"OR images.permitted = 1 " +
+				      	"OR images.owner_name = '" + userID +"' " +
+				      "AND ( ";
            	
       		for (int i = 0; i < count - 1; i++) {
            		term = searchTerms.get(i).trim();
@@ -108,8 +112,13 @@ public class Search extends HttpServlet implements SingleThreadModel {
 	        }
             
         } else {
-      		query += "FROM images " +
-      				 "WHERE ";
+      		query += "FROM images, group_lists " +
+      				 "WHERE (images.permitted = group_lists.group_id " +
+      				 	"AND group_lists.friend_id = '" + userID +"' ) " +
+      				 	"OR images.permitted = 1 " +
+      				 	"OR images.owner_name = '" + userID +"' " +
+      				 "AND ";
+      		
         }
         
         if ( !(request.getParameter("fromYear").equals("")) && !(request.getParameter("fromMonth").equals("")) 

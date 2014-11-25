@@ -64,51 +64,77 @@ public class GetInfo extends HttpServlet
 			try {
 			    conn = getConnected();
 			    Statement stmt = conn.createStatement();
-			    ResultSet rset = stmt.executeQuery(query);
-		        String owner_name, subject, place, timing, description;
-		
-			    if ( rset.next() ) {
-			    	owner_name = rset.getString("owner_name");
-			    	subject = rset.getString("subject");
-			        place = rset.getString("place");
-			        timing = rset.getString("timing");
-			        description = rset.getString("description");	        
-		            out.println("<html><head><title>"+owner_name + "'s photo " + "</title></head>" +
+		        
+		        String permissionQuery = "SELECT count(*) " +
+		        				  		 "FROM ( SELECT DISTINCT images.photo_id " +
+		        				  	     		"FROM images, group_lists " +
+		        				  	     		"WHERE ( (images.permitted = group_lists.group_id " +
+		        				  	     			"AND group_lists.friend_id = '" + userID + "' ) " +
+		        				  	     			"OR images.permitted = 1 " +
+		        				  	     			"OR images.owner_name = '" + userID + "' ) " +
+		        				  	     		  "AND photo_id = " + picid + ") ";
+			    
+				Statement checkstmt = conn.createStatement();
+				ResultSet checkrset = checkstmt.executeQuery(permissionQuery);
+
+		        checkrset.next();
+		        int check = Integer.parseInt(checkrset.getObject(1).toString());
+		        if (check < 1) {
+		            out.println("<html><head><title>Access Denied</title></head>" +
 		            		"<body bgcolor=\"#000000\" text=\"#cccccc\">" +
-			                "<center><img src = \"/proj1/GetOnePic?big"+picid+"\">" +
-			                "<h3>Subject: " + subject +" </h3>" +
-			                "<h3>Location: " + place + " </h3>" +
-			                "<h3>Owner: " + owner_name + " </h3>" +
-							"<h3>Date: " + timing.substring(0, 10) + " </h3>" +
-							"<h3>Description: " + description + " </h3>" +
+			                "<h3>Error: You do not have permission to view this photo!</h3>" +
 							"</body></html>");
-
-
-		            //Check if user has viwed image before
-		            String viewed_query = "SELECT count(*) FROM distinct_views WHERE photo_id=" + picid +
-		            		" AND user_id = '" + userID + "'";
-					ResultSet viewed_rset = stmt.executeQuery(viewed_query);
-					viewed_rset.next();
-			    	int count = viewed_rset.getInt(1);
-			    	
-			    	//if they haven't, add them to the viwed table
-					if ( count == 0 ) {
-		                PreparedStatement viewed_stmt = conn.prepareStatement(
-		                        "insert into distinct_views (photo_id, user_id) " +
-		                    	"values (" + picid + ", '" + userID +"')" );
-		
-		                viewed_stmt.executeUpdate();
-		                viewed_stmt.executeUpdate("commit");	
-					}
-					
-					if (owner_name.equals(userID)) {
-						out.println("<FORM METHOD = LINK ACTION = update_picture.jsp?>");
-						out.println("<input type='hidden' name='picID' value = " + picid +">");
-						out.println("<INPUT TYPE= submit VALUE= Update Info>");
-					}
-					
 		        } else {
-		        	out.println("<html> Pictures are not avialable</html>");
+		        
+				    ResultSet rset = stmt.executeQuery(query);
+			        String owner_name, subject, place, timing, description;
+			
+			        
+			        		
+			        		
+				    if ( rset.next() ) {
+				    	owner_name = rset.getString("owner_name");
+				    	subject = rset.getString("subject");
+				        place = rset.getString("place");
+				        timing = rset.getString("timing");
+				        description = rset.getString("description");	        
+			            out.println("<html><head><title>"+owner_name + "'s photo " + "</title></head>" +
+			            		"<body bgcolor=\"#000000\" text=\"#cccccc\">" +
+				                "<center><img src = \"/proj1/GetOnePic?big"+picid+"\">" +
+				                "<h3>Subject: " + subject +" </h3>" +
+				                "<h3>Location: " + place + " </h3>" +
+				                "<h3>Owner: " + owner_name + " </h3>" +
+								"<h3>Date: " + timing.substring(0, 10) + " </h3>" +
+								"<h3>Description: " + description + " </h3>" +
+								"</body></html>");
+	
+	
+			            //Check if user has viwed image before
+			            String viewed_query = "SELECT count(*) FROM distinct_views WHERE photo_id=" + picid +
+			            		" AND user_id = '" + userID + "'";
+						ResultSet viewed_rset = stmt.executeQuery(viewed_query);
+						viewed_rset.next();
+				    	int count = viewed_rset.getInt(1);
+				    	
+				    	//if they haven't, add them to the viwed table
+						if ( count == 0 ) {
+			                PreparedStatement viewed_stmt = conn.prepareStatement(
+			                        "insert into distinct_views (photo_id, user_id) " +
+			                    	"values (" + picid + ", '" + userID +"')" );
+			
+			                viewed_stmt.executeUpdate();
+			                viewed_stmt.executeUpdate("commit");	
+						}
+						
+						if (owner_name.equals(userID)) {
+							out.println("<FORM METHOD = LINK ACTION = update_picture.jsp?>");
+							out.println("<input type='hidden' name='picID' value = " + picid +">");
+							out.println("<INPUT TYPE= submit VALUE= Update Info>");
+						}
+					
+			        } else {
+			        	out.println("<html> Pictures are not avialable</html>");
+			        }
 		        }
 			} catch( Exception ex ) {
 			    out.println(ex.getMessage() );
