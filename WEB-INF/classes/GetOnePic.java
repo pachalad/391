@@ -55,17 +55,16 @@ public class GetOnePic extends HttpServlet
 	    ResultSet rset = stmt.executeQuery(query);
 
 	    if ( rset.next() ) {
-			response.setContentType("image/gif");
-			InputStream input = rset.getBinaryStream(1);	    
-			int imageByte;
-			while((imageByte = input.read()) != -1) {
-			    out.write(imageByte);
-			}
-			input.close();
-		} 
-	    else {
-	    	out.println("no picture available");
-	    }
+		response.setContentType("image/gif");
+		InputStream input = rset.getBinaryStream(1);	    
+		int imageByte;
+		while((imageByte = input.read()) != -1) {
+		    out.write(imageByte);
+		}
+		input.close();
+	    } 
+	    else 
+		out.println("no picture available");
 	} catch( Exception ex ) {
 	    out.println(ex.getMessage() );
 	}
