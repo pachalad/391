@@ -38,6 +38,10 @@ public class MUploadInfo extends HttpServlet {
 	String place = request.getParameter("place");
 
 	String date = year+"-"+month+"-"+day;
+	if (year.isEmpty() || month.isEmpty() || day.isEmpty()){
+		date = "2014-01-01";
+	}
+	
 	String user = request.getParameter("userID");
 	int permissionint=0;
 	int pic_id = 0;

@@ -44,7 +44,7 @@
 		while (rset1.next()) {
 			group = rset1.getObject(1).toString();
 			if (group.equals("private")){
-				out.println("<option selected=selected value="+'"'+group+'"'+'>'+group+"</option>")
+				out.println("<option selected=selected value="+'"'+group+'"'+'>'+group+"</option>");
 			}else{out.println("<option value="+'"'+group+'"'+'>'+group+"</option>");}
 			}
 		stmt1.close();
