@@ -5,15 +5,23 @@
  http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
  version="2.4">
 
- <servlet>
+<servlet>
+  <servlet-name>PictureBrowse</servlet-name>
+  <servlet-class>PictureBrowse</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>PictureBrowse</servlet-name>
+  <url-pattern>/PictureBrowse</url-pattern>
+</servlet-mapping>
 
-        <servlet-name>PictureBrowse</servlet-name>
-        <servlet-class>PictureBrowse</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>PictureBrowse</servlet-name>
-        <url-pattern>/picturebrowse</url-pattern>
-    </servlet-mapping>
+<servlet>
+  <servlet-name>Search</servlet-name>
+  <servlet-class>Search</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>Search</servlet-name>
+  <url-pattern>/Search</url-pattern>
+</servlet-mapping>
 
 <servlet>
     <servlet-name>UploadImage</servlet-name>

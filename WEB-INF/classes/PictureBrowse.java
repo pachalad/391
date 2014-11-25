@@ -24,6 +24,11 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
      *  servlet, called GetOnePic, with the photo_id as its query string
      *
      */
+    public void doPost(HttpServletRequest request,
+		      HttpServletResponse res)
+	throws ServletException, IOException {
+    	doGet(request, res);
+    }
     public void doGet(HttpServletRequest request,
 		      HttpServletResponse res)
 	throws ServletException, IOException {
@@ -71,9 +76,12 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 		    
 		    else {
 				//TODO: get query from session
-		    	query = "SELECT photo_id FROM images";
+		    	//query = "SELECT photo_id FROM images";
+		    	query = (String) session.getAttribute("QUERY");
 		    }
 	
+           	out.println(query);
+		    
 		    Connection conn = getConnected();
 		    Statement stmt = conn.createStatement();
 		    ResultSet rset = stmt.executeQuery(query);

@@ -36,7 +36,10 @@ if (session.getAttribute("userID") == null) {
 	<FORM METHOD = LINK ACTION = uploading.jsp>
 	<INPUT TYPE= submit VALUE='Upload Images'>
 	</FORM>
-	<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'><INPUT TYPE='submit' VALUE='Create Group'></FORM>
+	
+	<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'>
+	<INPUT TYPE='submit' VALUE='Create Group'>
+	</FORM>
 
 	<a href="/Photosight/picturebrowse?top" style="text-decoration: none">
    	<input type="submit" value="View Top Images" />

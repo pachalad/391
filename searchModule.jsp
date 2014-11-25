@@ -32,144 +32,169 @@
         return;
       }
 
-      try {
+      //try {
 %>
-      Query the database to see relevant items
-      <br>
-      <br>
-      Enter the keywords you would like to search for, seperated by commas.
-      <br>
-      e.g.: parrot, cannonball, pirate ship
-      <br>
+	      Query the database to see relevant items
+	      <br>
+	      <br>
+	      Enter the keywords you would like to search for, seperated by commas.
+	      <br>
+	      e.g.: parrot, cannonball, pirate ship
+	      <br>
 
-      <form name=search method=post action=searchModule.jsp> 
-      <table>
-      	<tr>
-      		<td>
-            	<input type=text name=searchTerm>
-          	</td>
-        </tr>
-      	<tr>
-			<td>
-      			Display results from after (must enter all or none):
-      		</td>
-      	</tr>
-      	<tr>
-      		<td>
-				Year:  <input type='text' name='fromYear'>
-				Month: <input type='text' name='fromMonth'>
-				Day:   <input type='text' name='fromDay'>
-				(Leave blank to search from the beginning of time)
-			</td>
-		</tr>
-		<tr>
-			<td>
-      			Display results from before (must enter all or none):
-      		</td>
-      	</tr>
-      	<tr>
-      		<td>
-				Year (YYYY):  <input type='text' name='toYear'>
-				Month (MM): <input type='text' name='toMonth'>
-				Day (DD):   <input type='text' name='toDay'>
-				(Leave blank to search to the end of the universe)
-			</td>
-		</tr>
-		<tr>
-      		<td>
-	      		Rank by: <select name='rank_by'>
-	      		<option value='frequency'>Term Frequency</option>
-	      		<option value='recent_first'>Most Recent First</option>
-	      		<option value='recent_last'>Most Recent Last</option>
-      		</td>
-      	</tr>
-		<tr>
-          <td>
-            <input type=submit value="Search" name="search">
-          </td>
-        </tr>
-      </table>
-<%
-      if (request.getParameter("search") != null) {
-    	  	out.println("<br>");
-        	out.println("Search term(s): " + request.getParameter("searchTerm"));
-          	out.println("<br>");
-          	
-            if(!(request.getParameter("searchTerm").equals(""))) {
-            	
-            	String searchString = request.getParameter("searchTerm");
-            	
-				List<String> searchTerms = Arrays.asList(searchString.split(","));
-            	
-            	out.println(searchTerms);
-				
-            	String query = "SELECT photo_id, subject, place, description, ";
-            	
-            	String term;
-            	
-            	int count = searchTerms.size();
-            	
-            	//adapted from http://sqlmag.com/t-sql/counting-instances-word-record accessed Nov 20th, 2014
-            	
-            	query += "( ";
-            	for (int i = 0; i < count - 1; i++) {
-            		term = searchTerms.get(i).trim();
-	            	query += "( (6 * (LENGTH(subject) - LENGTH(REPLACE(subject, '" + term + "', '')))/LENGTH('"+term+"') ) ) + ";
-            	}
-            	term = searchTerms.get(count - 1).trim();
-            	query += "( (6 * (LENGTH(subject) - LENGTH(REPLACE(subject, '" + term + "', '')))/LENGTH('"+term+"') ) )" +
-       				 	  ") AS subjectFreq, ";
-            			  
-            	query += "( ";
-            	for (int i = 0; i < count - 1; i++) {
-            		term = searchTerms.get(i).trim();
-	            	query += "( (3 * (LENGTH(place) - LENGTH(REPLACE(place, '" + term + "', '')))/LENGTH('"+term+"') ) ) + ";
-            	}
-            	term = searchTerms.get(count - 1).trim();
-            	query += "( (3 * (LENGTH(place) - LENGTH(REPLACE(place, '" + term + "', '')))/LENGTH('"+term+"') ) )" +
-       				 	  ") AS placeFreq, ";
-       				 	  
-	           	query += "( ";
-	           	for (int i = 0; i < count - 1; i++) {
-	           		term = searchTerms.get(i).trim();
-	            	query += "( ((LENGTH(description) - LENGTH(REPLACE(description, '" + term + "', '')))/LENGTH('"+term+"') ) ) + ";
-	           	}
-	           	term = searchTerms.get(count - 1).trim();
-	           	query += "( ((LENGTH(description) - LENGTH(REPLACE(description, '" + term + "', '')))/LENGTH('"+term+"') ) )" +
-	      				 ") AS descriptionFreq ";
-				
-	      		query += "FROM images " +
-	      				 "WHERE ";
-	           	
-	      		for (int i = 0; i < count - 1; i++) {
-	           		term = searchTerms.get(i).trim();
-	            	query += "(contains(subject, '" + term + "') > 0) OR " +
-	            			 "(contains(place, '" + term + "') > 0) OR " +
-	            			 "(contains(description, '" + term + "') > 0) OR ";
-	           	}
-				term = searchTerms.get(count - 1).trim();
-	      		query += "(contains(subject, '" + term + "') > 0) OR " +
-           			 	 "(contains(place, '" + term + "') > 0) OR " +
-           			 	 "(contains(description, '" + term + "') > 0) ";
-            	
-	            if ( !(request.getParameter("fromYear").equals("")) && !(request.getParameter("fromMonth").equals("")) 
-	            	  && !(request.getParameter("fromDay").equals("")) ) {
-	            	query += "AND timing >= CAST('"+request.getParameter("fromYear")+"/"+
-	            			request.getParameter("fromMonth")+"/"+request.getParameter("fromDay")+"' AS datetime) ";
+	      <form action="Search" method="post" >
+	      <table>
+	      	<tr>
+	      		<td>
+	            	<input type=text name=searchTerm>
+	          	</td>
+	        </tr>
+	      	<tr>
+				<td>
+	      			Display results from after (must enter all or none):
+	      		</td>
+	      	</tr>
+	      	<tr>
+	      		<td>
+					Year:  <input type='text' name='fromYear'>
+					Month: <input type='text' name='fromMonth'>
+					Day:   <input type='text' name='fromDay'>
+					(Leave blank to search from the beginning of time)
+				</td>
+			</tr>
+			<tr>
+				<td>
+	      			Display results from before (must enter all or none):
+	      		</td>
+	      	</tr>
+	      	<tr>
+	      		<td>
+					Year (YYYY):  <input type='text' name='toYear'>
+					Month (MM): <input type='text' name='toMonth'>
+					Day (DD):   <input type='text' name='toDay'>
+					(Leave blank to search to the end of the universe)
+				</td>
+			</tr>
+			<tr>
+	      		<td>
+		      		Rank by: <select name='rank_by'>
+		      		<option value='frequency'>Term Frequency</option>
+		      		<option value='recent_first'>Most Recent First</option>
+		      		<option value='recent_last'>Most Recent Last</option>
+	      		</td>
+	      	</tr>
+
+	      </table>
+	<%
+		/*
+	      if (request.getParameter("search") != null) {
+	    	  	out.println("<br>");
+	        	out.println("Search term(s): " + request.getParameter("searchTerm"));
+	          	out.println("<br>");
+	          	
+	        	String query = "SELECT photo_id, subject, place, description, ";
+	          	
+	            if(!(request.getParameter("searchTerm").equals(""))) {
+	            	
+	            	String searchString = request.getParameter("searchTerm");
+	            	
+					List<String> searchTerms = Arrays.asList(searchString.split(","));
+	            	
+	            	out.println(searchTerms);
+	            	
+	            	String term;
+	            	
+	            	int count = searchTerms.size();
+	            	
+	            	//adapted from http://sqlmag.com/t-sql/counting-instances-word-record accessed Nov 20th, 2014
+	            	
+	            	query += "( ";
+	            	for (int i = 0; i < count - 1; i++) {
+	            		term = searchTerms.get(i).trim();
+		            	query += "( (6 * (LENGTH(subject) - LENGTH(REPLACE(subject, '" + term + "', '')))/LENGTH('"+term+"') ) ) + ";
+	            	}
+	            	term = searchTerms.get(count - 1).trim();
+	            	query += "( (6 * (LENGTH(subject) - LENGTH(REPLACE(subject, '" + term + "', '')))/LENGTH('"+term+"') ) )" +
+	       				 	  ") AS subjectFreq, ";
+	            			  
+	            	query += "( ";
+	            	for (int i = 0; i < count - 1; i++) {
+	            		term = searchTerms.get(i).trim();
+		            	query += "( (3 * (LENGTH(place) - LENGTH(REPLACE(place, '" + term + "', '')))/LENGTH('"+term+"') ) ) + ";
+	            	}
+	            	term = searchTerms.get(count - 1).trim();
+	            	query += "( (3 * (LENGTH(place) - LENGTH(REPLACE(place, '" + term + "', '')))/LENGTH('"+term+"') ) )" +
+	       				 	  ") AS placeFreq, ";
+	       				 	  
+		           	query += "( ";
+		           	for (int i = 0; i < count - 1; i++) {
+		           		term = searchTerms.get(i).trim();
+		            	query += "( ((LENGTH(description) - LENGTH(REPLACE(description, '" + term + "', '')))/LENGTH('"+term+"') ) ) + ";
+		           	}
+		           	term = searchTerms.get(count - 1).trim();
+		           	query += "( ((LENGTH(description) - LENGTH(REPLACE(description, '" + term + "', '')))/LENGTH('"+term+"') ) )" +
+		      				 ") AS descriptionFreq ";
+					
+		      		query += "FROM images " +
+		      				 "WHERE (";
+		           	
+		      		for (int i = 0; i < count - 1; i++) {
+		           		term = searchTerms.get(i).trim();
+		            	query += "(contains(subject, '" + term + "') > 0) OR " +
+		            			 "(contains(place, '" + term + "') > 0) OR " +
+		            			 "(contains(description, '" + term + "') > 0) OR ";
+		           	}
+					term = searchTerms.get(count - 1).trim();
+		      		query += "(contains(subject, '" + term + "') > 0) OR " +
+	           			 	 "(contains(place, '" + term + "') > 0) OR " +
+	           			 	 "(contains(description, '" + term + "') > 0) ) ";
+	            	
+		            if ( ( !(request.getParameter("fromYear").equals("")) && !(request.getParameter("fromMonth").equals("")) 
+		            	  && !(request.getParameter("fromDay").equals("")) ) ||
+		            	  ( !(request.getParameter("toYear").equals("")) && !(request.getParameter("toMonth").equals("")) 
+				            	  && !(request.getParameter("toDay").equals("")) ) ) {
+		            	query += "AND ";
+			        }
+		            
+	            } else {
+		      		query += "FROM images " +
+		      				 "WHERE ";
 	            }
 	            
+	            if ( !(request.getParameter("fromYear").equals("")) && !(request.getParameter("fromMonth").equals("")) 
+		            	  && !(request.getParameter("fromDay").equals("")) ) {
+		            	
+	            	query += "( timing >= TO_DATE('" +request.getParameter("fromYear") + "/" +
+		            	  						request.getParameter("fromMonth") + "/" +
+		            	  						request.getParameter("fromDay")  +
+		            	  						"', 'YYYY-MM-DD') ) ";
+		            	if ( !(request.getParameter("toYear").equals("")) && !(request.getParameter("toMonth").equals("")) 
+				            	  && !(request.getParameter("toDay").equals("")) ) {
+			            	query += "AND ";
+		            	}
+		            	
+		            }
+		            
 	            if ( !(request.getParameter("toYear").equals("")) && !(request.getParameter("toMonth").equals("")) 
 		            	  && !(request.getParameter("toDay").equals("")) ) {
-		            	query += "AND timing <= to_date('"+request.getParameter("toYear")+"-"+
-		            	  			request.getParameter("toMonth")+"-"+request.getParameter("toDay")+"','yyyy-mm-dd') ";
+	            	query += "( timing <= TO_DATE('" +request.getParameter("toYear") + "/" +
+	  						request.getParameter("toMonth") + "/" +
+	  						request.getParameter("toDay")  +
+	  						"', 'YYYY-MM-DD') ) ";
 		        }
-           			 	 
-           		query += "ORDER BY (subjectFreq + placeFreq + descriptionFreq) DESC";
-	      		
-            	out.println(query);
-              	PreparedStatement doSearch = m_con.prepareStatement(query);
-              	
-              	
+	            
+	          	if (request.getParameter("rank_by").equals("frequency")) {
+	          		query += "ORDER BY (subjectFreq + placeFreq + descriptionFreq) DESC";
+	          	} else if (request.getParameter("rank_by").equals("recent_first")) {
+	          		query += "ORDER BY timing DESC";
+	          	} else if (request.getParameter("rank_by").equals("recent_last")) {
+	          		query += "ORDER BY timing";
+	          	}
+	          	
+	           	//out.println(query);
+	            PreparedStatement doSearch = m_con.prepareStatement(query);
+	             	
+	             	
 	            ResultSet rset2 = doSearch.executeQuery();
 	            out.println("<table border=1>");
 	            out.println("<tr>");
@@ -207,14 +232,20 @@
 		            out.println("</tr>");
 	                
 	                //out.println(rset2.getObject(1));
-
+	
 	            } 
-	            out.println("</table>");
-            } else {
-            	out.println("<br><b>Please enter text for quering</b>");
-            }            
-          }
-          m_con.close();
+	            out.println("</table>"); 
+	            
+	            //request.setParameter("query", query);
+
+	            query = "SELECT photo_id FROM images";
+	            out.println(query);
+				//out.println("<input type='hidden' name='query' value = '" + query +"'>");
+	            session.setAttribute("query", query);
+				//session.sendRedirect("PictureBrowse");
+	   
+	  		//}	
+	        m_con.close();
         }
         catch(SQLException e)
         {
@@ -222,7 +253,13 @@
           e.getMessage());
 			m_con.rollback();
         }
+      */
       %>
+      <tr>
+	  	<td>
+	    	<input type=submit value="Search" name="search">
+	    </td>
+	  </tr>
     </form>
   </body>
 </html>
