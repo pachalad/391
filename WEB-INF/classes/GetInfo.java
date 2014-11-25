@@ -121,6 +121,9 @@ public class GetInfo extends HttpServlet
 			
 			                viewed_stmt.executeUpdate();
 			                viewed_stmt.executeUpdate("commit");	
+			                
+			                viewed_stmt.close();
+			                
 						}
 						
 						if (owner_name.equals(userID)) {

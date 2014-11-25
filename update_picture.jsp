@@ -51,6 +51,7 @@
 	
 			checkrset.next();
 			String owner = checkrset.getObject(1).toString();
+			
 			if ( !(owner.equals(userID)) ) {
 				out.println("<html><head><title>Access Denied</title></head>" +
 							"<body bgcolor=\"#000000\" text=\"#cccccc\">" +
@@ -91,6 +92,9 @@
 				Statement stmt2 = conn2.createStatement();
 				ResultSet rset2 = stmt2.executeQuery(infoQuery);
 				
+				stmt2.close();
+				conn2.close();
+				
 		        String owner_name, subject, place, timing, description, year, month, day;
 		
 			    if ( rset2.next() ) {
@@ -127,6 +131,7 @@
 		// to close the connection
 		finally {
 			try {
+				stmt.close();
 		    	conn.close();
 		    } catch ( SQLException ex) {
 		    	out.println( ex.getMessage() );

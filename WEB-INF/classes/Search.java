@@ -43,7 +43,7 @@ public class Search extends HttpServlet implements SingleThreadModel {
 		/*
 		 *   to execute the given query
 		 */
-		String query = "SELECT DISTINCT photo_id, ";
+		String query = "SELECT DISTINCT photo_id, timing ";
       	
         if(!(request.getParameter("searchTerm").equals(""))) {
         	
@@ -59,7 +59,7 @@ public class Search extends HttpServlet implements SingleThreadModel {
         	
         	//adapted from http://sqlmag.com/t-sql/counting-instances-word-record accessed Nov 20th, 2014
         	
-        	query += "( ";
+        	query += ", ( ";
         	for (int i = 0; i < count - 1; i++) {
         		term = searchTerms.get(i).trim();
             	query += "( (6 * (LENGTH(subject) - LENGTH(REPLACE(subject, '" + term + "', '')))/LENGTH('"+term+"') ) ) + ";
@@ -125,7 +125,7 @@ public class Search extends HttpServlet implements SingleThreadModel {
 	      				 	"OR images.owner_name = '" + userID +"' " +
 	      				 	"AND ";
 			} else {
-				query += "WHERE ( ";
+				query += "WHERE ";
 			}
       		
         }
@@ -153,7 +153,9 @@ public class Search extends HttpServlet implements SingleThreadModel {
         }
         
       	if (request.getParameter("rank_by").equals("frequency")) {
-      		query += "ORDER BY (subjectFreq + placeFreq + descriptionFreq) DESC";
+            if(!(request.getParameter("searchTerm").equals(""))) {
+            	query += "ORDER BY (subjectFreq + placeFreq + descriptionFreq) DESC";
+            }
       	} else if (request.getParameter("rank_by").equals("recent_first")) {
       		query += "ORDER BY timing DESC";
       	} else if (request.getParameter("rank_by").equals("recent_last")) {
