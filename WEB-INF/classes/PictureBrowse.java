@@ -85,23 +85,23 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 		    	query = (String) session.getAttribute("QUERY");
 		    } else {
 				query = "SELECT DISTINCT images.photo_id " +
-						"FROM images, group_lists " +
-						"WHERE (images.permitted = group_lists.group_id " +
-						      "AND group_lists.friend_id = '" + userID +"' ) " +
-						  "OR images.permitted = 1 " +
-						  "OR images.owner_name = '" + userID +"' ";
-				
-				
+						"FROM images, group_lists ";
+				if ( !(userID.equals("admin"))) {
+						query += "WHERE (images.permitted = group_lists.group_id " +
+								 "AND group_lists.friend_id = '" + userID +"' ) " +
+								 "OR images.permitted = 1 " +
+								 "OR images.owner_name = '" + userID +"' ";
+				}
 		    }
-	
-           	out.println(query);
-           	out.println("<br><br>");
 		    
 		    Connection conn = getConnected();
 		    Statement stmt = conn.createStatement();
 		    ResultSet rset = stmt.executeQuery(query);
 		    String p_id = "";
 	
+		    out.println(query);
+		    out.println("<br><br>");
+		    
 		    while (rset.next() ) {
 			p_id = (rset.getObject(1)).toString();
 	
@@ -114,10 +114,9 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 		    stmt.close();
 		    conn.close();
 		} catch ( Exception ex ){ out.println( ex.toString() );}
-	    //TODO change exception
-		out.println("<P><a href=\"/yuan/servlets/logicsql.html\"> Return </a>");
-		out.println("</body>");
-		out.println("</html>");
+			out.println("<P><a href=\"/Photosight/main_page.jsp\"> Return </a>");
+			out.println("</body>");
+			out.println("</html>");
 	    }
     }
 	    

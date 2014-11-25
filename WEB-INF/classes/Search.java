@@ -86,12 +86,17 @@ public class Search extends HttpServlet implements SingleThreadModel {
            	query += "( ((LENGTH(description) - LENGTH(REPLACE(description, '" + term + "', '')))/LENGTH('"+term+"') ) )" +
       				 ") AS descriptionFreq ";
 			
-      		query += "FROM images, group_lists " +
-      				 "WHERE (images.permitted = group_lists.group_id " +
-				      	"AND group_lists.friend_id = '" + userID +"' ) " +
-				      	"OR images.permitted = 1 " +
-				      	"OR images.owner_name = '" + userID +"' " +
-				      "AND ( ";
+      		query += "FROM images, group_lists ";
+      		
+			if ( !(userID.equals("admin"))) {
+				query += "WHERE (images.permitted = group_lists.group_id " +
+      					 		"AND group_lists.friend_id = '" + userID +"' ) " +
+      					 	"OR images.permitted = 1 " +
+      					    "OR images.owner_name = '" + userID +"' " +
+      					    "AND ( ";
+			} else {
+				query += "WHERE ( ";
+			}
            	
       		for (int i = 0; i < count - 1; i++) {
            		term = searchTerms.get(i).trim();
@@ -112,12 +117,16 @@ public class Search extends HttpServlet implements SingleThreadModel {
 	        }
             
         } else {
-      		query += "FROM images, group_lists " +
-      				 "WHERE (images.permitted = group_lists.group_id " +
-      				 	"AND group_lists.friend_id = '" + userID +"' ) " +
-      				 	"OR images.permitted = 1 " +
-      				 	"OR images.owner_name = '" + userID +"' " +
-      				 "AND ";
+			query += "FROM images, group_lists ";
+			if ( !(userID.equals("admin"))) {
+				query += "WHERE (images.permitted = group_lists.group_id " +
+	      				 		"AND group_lists.friend_id = '" + userID +"' ) " +
+	      				 	"OR images.permitted = 1 " +
+	      				 	"OR images.owner_name = '" + userID +"' " +
+	      				 	"AND ";
+			} else {
+				query += "WHERE ( ";
+			}
       		
         }
         

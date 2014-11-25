@@ -79,18 +79,15 @@ public class GetInfo extends HttpServlet
 
 		        checkrset.next();
 		        int check = Integer.parseInt(checkrset.getObject(1).toString());
-		        if (check < 1) {
+		        if ( (check < 1) && !(userID.equals("admin")) ) {
 		            out.println("<html><head><title>Access Denied</title></head>" +
 		            		"<body bgcolor=\"#000000\" text=\"#cccccc\">" +
 			                "<h3>Error: You do not have permission to view this photo!</h3>" +
 							"</body></html>");
-		        } else {
+		        } else  {
 		        
 				    ResultSet rset = stmt.executeQuery(query);
-			        String owner_name, subject, place, timing, description;
-			
-			        
-			        		
+			        String owner_name, subject, place, timing, description;	
 			        		
 				    if ( rset.next() ) {
 				    	owner_name = rset.getString("owner_name");
@@ -147,8 +144,7 @@ public class GetInfo extends HttpServlet
 			    	out.println( ex.getMessage() );
 			    }
 			}
-		}
-    	
+    	}
     }
 
     /*
