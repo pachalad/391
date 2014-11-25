@@ -20,7 +20,8 @@ String userKeyID = (String) session.getAttribute("userIDKey");
 if (session.getAttribute("userID") == null) {
     // Session is not created.
 	response.sendRedirect("/Photosight/login.html");
-} else {
+	
+}else{
 %>
 	<H1><CENTER>Photosight</CENTER></H1>
 	<% 
@@ -55,6 +56,16 @@ if (session.getAttribute("userID") == null) {
 	<FORM METHOD = LINK ACTION = removeGroupMembers.jsp>
 	<INPUT TYPE= submit VALUE= 'Remove Group Members'>
 	</FORM>
+<%
+userID = (String) session.getAttribute("userID");
+if (userID.equals("admin")){
+	out.println("<FORM METHOD = LINK ACTION = dataanalysis.jsp>");
+	out.println("<INPUT TYPE= submit VALUE= 'Admin Data Analysis'>");
+	out.println("</FORM>");
+	
+}
+	
+%>
 
 	<FORM METHOD = LINK ACTION = logoutPage.jsp >
 	<INPUT TYPE= submit VALUE= Logout>
