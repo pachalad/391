@@ -66,9 +66,9 @@ public class MUploadInfo extends HttpServlet {
 	    Statement stmt = conn.createStatement();
 	    for(int i=0;i<number;i++){
 	    	// Get the next pic id.
-	    	ResultSet rset1 = stmt.executeQuery("SELECT pic_id_sequence.nextval from dual");
+	    	ResultSet rset1 = stmt.executeQuery("SELECT max(photo_id) from images");
 	    	rset1.next();
-	    	pic_id = rset1.getInt(1);
+	    	pic_id = rset1.getInt(1)+1;
 	    	// Find the permission id.
 	    	rset1 = stmt.executeQuery("SELECT group_id from groups where group_name='"+permission+"'");
 	    	rset1.next();
