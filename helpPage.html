@@ -130,5 +130,54 @@ Next the admin enters the user name, subject,  date parameters. Next
 the user can select one of three radio buttons "Year", "Month",
 and  Week. Press the "Analyze!" button. Yo can do this multiple
 different options presented</font></p>
+
+<style type="text/css">P { margin-bottom: 0.08in; }A:link {  }</style>
+
+
+<p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="LEFT">
+<font color="#000000"><font face="Times New Roman, serif"><font size="3">Installing
+the system!</font></font></font></p>
+<p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="LEFT">
+<br>
+</p>
+<ol><li><p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="LEFT">
+	<font color="#000000"><font face="Times New Roman, serif"><font size="3">Make
+	sure you have tom cat, sqlplus and a catalina folder on your system!</font></font></font></p>
+	</li><li><p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="LEFT">
+	<font color="#000000"><font face="Times New Roman, serif"><font size="3">Go
+	to catalina--&gt;webapps, clone <a href="https://github.com/pachalad/391">https://github.com/pachalad/391</a>
+	into webapps!</font></font></font></p>
+	</li><li><p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="LEFT">
+	<font color="#000000"><font face="Times New Roman, serif"><font size="3">If
+	the folder name is 391 change it to Photosight.</font></font></font></p>
+	</li><li><p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="LEFT">
+	<font color="#000000"><font face="Times New Roman, serif"><font size="3">We
+	have 4 libraries in the 
+	catalina--&gt;webapps--&gt;Photosight--&gt;WEB-INF--&gt;lib. Make
+	sure you set your classpaths to these 4 libraries otherwise things
+	will break!</font></font></font></p>
+	</li><li><p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="LEFT">
+	<font color="#000000"><font face="Times New Roman, serif"><font size="3">Go
+	through all the files, in any of the files that has database stuff,
+	make sure to change the database registry stuff to information for
+	your database.</font></font></font></p>
+	</li><li><p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="LEFT">
+	<font color="#000000"><font face="Times New Roman, serif"><font size="3">Re-compile
+	all the java files in 
+	catalina--&gt;webapps--&gt;Photosight--&gt;WEB-INF--&gt;classes.</font></font></font></p>
+	</li><li><p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="LEFT">
+	<font color="#000000"><font face="Times New Roman, serif"><font size="3">In
+	the  catalina--&gt;webapps--&gt;Photosight--&gt;sql, run
+	setup_2014f.sql first in your database, next run popular.sql and
+	index.sql. Finally, run drjobdml.sql</font></font></font></p>
+	</li><li><p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="LEFT">
+	<font color="#000000"><font face="Times New Roman, serif"><font size="3">Run
+	your tomcat! Enjoy your website!</font></font></font></p>
+</li></ol>
+<p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="CENTER">
+<br>
+</p>
+
+
 </BODY>
 </HTML>
