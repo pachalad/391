@@ -168,7 +168,8 @@ the system!</font></font></font></p>
 	</li><li><p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="LEFT">
 	<font color="#000000"><font face="Times New Roman, serif"><font size="3">In
 	the  catalina--&gt;webapps--&gt;Photosight--&gt;sql, run
-	setup_2014f.sql first in your database. Next run drjobdml.sql</font></font></font></p>
+	setup_2014f.sql first in your database, next run popular.sql and
+	index.sql. Finally, run drjobdml.sql</font></font></font></p>
 	</li><li><p style="margin-bottom: 0in; font-variant: normal; font-style: normal; font-weight: normal" align="LEFT">
 	<font color="#000000"><font face="Times New Roman, serif"><font size="3">Run
 	your tomcat! Enjoy your website!</font></font></font></p>
