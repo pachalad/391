@@ -50,9 +50,7 @@ if (session.getAttribute("userID") == null) {
 	<INPUT TYPE= submit VALUE='Upload Images'>
 	</FORM>
 	
-	<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'>
-	<INPUT TYPE='submit' VALUE='Create Group'>
-	</FORM>
+
 
 	<FORM METHOD = 'LINK' ACTION = 'create_group.jsp'>
 	<INPUT TYPE='submit' VALUE='Create Group'></FORM>
