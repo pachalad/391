@@ -34,12 +34,10 @@
 		String newPhone = (request.getParameter("newPHONE")).trim();
 		
 		if (!(newUsername.isEmpty() && newPassword.isEmpty() && newFirstName.isEmpty() && newLastName.isEmpty() && newAddress.isEmpty() && newEmail.isEmpty() && newPhone.isEmpty())){
-			//out.println("fuck yeah i fucking got you now");
+
 			
 			//newUsername = null;
-			//out.println("Well fuck "+newUsername+"        this is fucking great");
 			//Oracle connection stuff
-	    	//out.println("<CENTER><h1>YOU ARE NOT FUCKED</h1></CENTER>");
 			
 			Connection conn = null;
 			String driverName = "oracle.jdbc.driver.OracleDriver";

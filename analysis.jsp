@@ -35,12 +35,11 @@
 	String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS ";
 	String driverName = "oracle.jdbc.driver.OracleDriver";
 
-	String query=null;
+	String query= null;
 	// These conditionals run if the user didnt choose timing. Based
 	// on the parameters it selects different queries.
 	if (!x.equals("timing") && !y.equals("timing")){
 		if (user.isEmpty() && sub.isEmpty()){
-			out.println("correct place");
 			query = "select "+x+","+y+", count(*) from images group by "+x+","+y;
 		}else if(!user.isEmpty() && !sub.isEmpty()){
 			query = "select "+x+","+y+",count(*) from images where subject like '%"+sub+"%' and owner_name='"+user+"' group by "+x+","+y;

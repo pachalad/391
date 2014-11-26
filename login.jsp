@@ -13,7 +13,7 @@
 <%@ page import="java.sql.*" %>
 
 <% 
-	/**
+	/*
 	This file checks to see if the username and password typed in are 
 	valid in our database.  If not it reprompts the user showing a message
 	that either the typed in password or username are invalid.
@@ -112,7 +112,7 @@
             	out.println("<hr>" + ex.getMessage() + "<hr>");
                 }
         }else
-	/**
+	/*
 	Called if the user clicks Register Button. Sends the user to the registration page.	
 	*/
 	if (request.getParameter("bRegister") != null){
