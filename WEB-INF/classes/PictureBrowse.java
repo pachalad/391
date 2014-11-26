@@ -95,7 +95,7 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 		    //If user wants to view all images
 		    else  if ("all".equals(requestQueryString) ) {
 		    	//Select each photo id
-				query = "SELECT DISTINCT images.photo_id " +
+				query = "SELECT DISTINCT photo_id " +
 						"FROM images, group_lists ";
 				//If user is not admin, check for permissions.
 				if ( !(userID.equals("admin"))) {
@@ -111,6 +111,8 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 		    	query = (String) session.getAttribute("QUERY");
 		    }
 		    
+			out.println(query);
+
 		    //Connect to the database and execute the query.
 		    conn = getConnected();
 		    Statement stmt = conn.createStatement();
@@ -137,7 +139,8 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 		    }
 	    }
 	}
-		
+
+
 	out.println("<P><a href=\"/Photosight/main_page.jsp\"> Return </a>");
 	out.println("</body>");
 	out.println("</html>");
