@@ -36,9 +36,11 @@ if (session.getAttribute("userID") == null) {
 	<br>
 	<br>
 
-	<FORM METHOD = LINK ACTION = 'PictureBrowse'>
-	<INPUT TYPE= submit VALUE= 'View All Images'>
-	</FORM>
+	<a href="/Photosight/PictureBrowse?all" style="text-decoration: none">
+   	<input type="submit" value="View All Images" />
+	</a>
+	<br>
+	<br>
 
 	<FORM METHOD = LINK ACTION = 'searchModule.jsp'>
 	<INPUT TYPE= submit VALUE= 'Search For Images'>
@@ -71,6 +73,9 @@ if (userID.equals("admin")){
 }
 	
 %>
+	<FORM METHOD = LINK ACTION = helpPage.html >
+	<INPUT TYPE= submit VALUE= Help>
+	</FORM>
 
 	<FORM METHOD = LINK ACTION = logoutPage.jsp >
 	<INPUT TYPE= submit VALUE= Logout>

@@ -64,7 +64,8 @@ public class UpdatePicture extends HttpServlet {
 	    stmt.execute(statement);
         stmt.executeUpdate("commit");
 	    response_message = " Update OK!  ";
-        conn.close();
+        stmt.close();
+	    conn.close();
 
 	} catch( Exception ex ) {
 	    //System.out.println( ex.getMessage());

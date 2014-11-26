@@ -97,7 +97,7 @@ public class GetInfo extends HttpServlet
 				        description = rset.getString("description");	        
 			            out.println("<html><head><title>"+owner_name + "'s photo " + "</title></head>" +
 			            		"<body bgcolor=\"#000000\" text=\"#cccccc\">" +
-				                "<center><img src = \"/proj1/GetOnePic?big"+picid+"\">" +
+				                "<center><img src = \"GetOnePic?big"+picid+"\">" +
 				                "<h3>Subject: " + subject +" </h3>" +
 				                "<h3>Location: " + place + " </h3>" +
 				                "<h3>Owner: " + owner_name + " </h3>" +
@@ -121,6 +121,9 @@ public class GetInfo extends HttpServlet
 			
 			                viewed_stmt.executeUpdate();
 			                viewed_stmt.executeUpdate("commit");	
+			                
+			                viewed_stmt.close();
+			                
 						}
 						
 						if (owner_name.equals(userID)) {

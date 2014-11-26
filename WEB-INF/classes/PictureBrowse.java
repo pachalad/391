@@ -66,24 +66,23 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 			String query;
 			
 			String requestQueryString  = request.getQueryString();
+			
 		    if ("top".equals(requestQueryString) ) {
 				query = "SELECT DISTINCT photo_id " +
 						"FROM (SELECT images.photo_id, count(images.photo_id) " +
-							  "FROM distinct_views, images, group_lists " +
-							  "WHERE (images.permitted = group_lists.group_id " +
+							  "FROM distinct_views, images, group_lists ";
+				if ( !(userID.equals("admin"))) {
+					query +=  "WHERE (images.permitted = group_lists.group_id " +
 							  "AND group_lists.friend_id = '" + userID +"') " +
 							  "OR images.permitted = 1 " +
-							  "OR images.owner_name = '" + userID +"' " +
-							  "GROUP BY images.photo_id " +
+							  "OR images.owner_name = '" + userID +"' ";
+				}
+				query +=      "GROUP BY images.photo_id " +
 							  "ORDER BY count(photo_id) desc) " +
 							  "WHERE rownum <= 5 ";
 		    }
 		    
-		    else if ( !(session.getAttribute("QUERY") == null ) ){
-				//TODO: get query from session
-		    	//query = "SELECT photo_id FROM images";
-		    	query = (String) session.getAttribute("QUERY");
-		    } else {
+		    else  if ("all".equals(requestQueryString) ) {
 				query = "SELECT DISTINCT images.photo_id " +
 						"FROM images, group_lists ";
 				if ( !(userID.equals("admin"))) {
@@ -94,13 +93,21 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 				}
 		    }
 		    
+		    else {
+				//TODO: get query from session
+		    	//query = "SELECT photo_id FROM images";
+		    	query = (String) session.getAttribute("QUERY");
+		    }
+		    
+			
+		    out.println(query);
+		    out.println("<br><br>");
+		    
 		    Connection conn = getConnected();
 		    Statement stmt = conn.createStatement();
 		    ResultSet rset = stmt.executeQuery(query);
 		    String p_id = "";
-	
-		    out.println(query);
-		    out.println("<br><br>");
+
 		    
 		    while (rset.next() ) {
 			p_id = (rset.getObject(1)).toString();
