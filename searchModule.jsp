@@ -62,9 +62,9 @@
 	      	</tr>
 	      	<tr>
 	      		<td>
-					Year:  <input type='text' name='fromYear'>
-					Month: <input type='text' name='fromMonth'>
-					Day:   <input type='text' name='fromDay'>
+					Year (YYYY):<input type='text' name='fromYear'>
+					Month (MM): <input type='text' name='fromMonth'>
+					Day (DD):   <input type='text' name='fromDay'>
 					(Leave blank to search from the beginning of time)
 				</td>
 			</tr>
@@ -75,7 +75,7 @@
 	      	</tr>
 	      	<tr>
 	      		<td>
-					Year (YYYY):  <input type='text' name='toYear'>
+					Year (YYYY):<input type='text' name='toYear'>
 					Month (MM): <input type='text' name='toMonth'>
 					Day (DD):   <input type='text' name='toDay'>
 					(Leave blank to search to the end of the universe)
