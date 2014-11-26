@@ -11,16 +11,16 @@ import java.net.*;
  *  A module to display pictures.
  *  Adapted from Li-Yan Yuan's example.
  *
- *  @author  Benjamin Holmwood
+ *  @author  Benjamin Holmwood, adpated from Li-Yan Yuan.
  *
  */
 public class PictureBrowse extends HttpServlet implements SingleThreadModel {
     
     /**
-     *  Generate and then send an HTML file that displays all the thermonail
+     *  Generate and then send an HTML file that displays all the thumbnail
      *  images of the photos.
      *
-     *  Both the thermonail and images will be generated using another 
+     *  Both the thumbnail and images will be generated using another 
      *  servlet, called GetOnePic, with the photo_id as its query string
      *
      */
@@ -69,24 +69,35 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 			
 			String requestQueryString  = request.getQueryString();
 			
+			//If user wants to view top images
 		    if ("top".equals(requestQueryString) ) {
+
+		    	//Select each photo_id
 				query = "SELECT DISTINCT photo_id " +
-						"FROM (SELECT images.photo_id, count(images.photo_id) " +
-							  "FROM distinct_views, images, group_lists ";
-				if ( !(userID.equals("admin"))) {
-					query +=  "WHERE (images.permitted = group_lists.group_id " +
-							  "AND group_lists.friend_id = '" + userID +"') " +
-							  "OR images.permitted = 1 " +
-							  "OR images.owner_name = '" + userID +"' ";
-				}
-				query +=      "GROUP BY images.photo_id " +
-							  "ORDER BY count(photo_id) desc) " +
-							  "WHERE rownum <= 5 ";
+						"FROM (SELECT distinct_views.photo_id, count(distinct_views.photo_id) " +
+      					"FROM distinct_views ";
+      			//If user is not admin, check for permissions
+      			if ( !(userID.equals("admin"))) {
+      				query += ", (SELECT DISTINCT images.photo_id AS permitted_id " +
+         				 	 	"FROM images, group_lists " +
+        				 		"WHERE ( (images.permitted = group_lists.group_id " +
+          				 		"AND group_lists.friend_id = '" + userID +"' ) " +
+          				 		"OR images.permitted = 1 " +
+          				 		"OR images.owner_name = '" + userID +"' ) ) " +
+      					 		"WHERE distinct_views.photo_id = permitted_id ";
+      			}
+      			//Order by distinct views in descending order and display first 5 results.
+      			query += "GROUP BY distinct_views.photo_id " +
+      					 "ORDER BY count(distinct_views.photo_id) desc) " +
+						 "WHERE rownum <= 5 ";
 		    }
 		    
+		    //If user wants to view all images
 		    else  if ("all".equals(requestQueryString) ) {
+		    	//Select each photo id
 				query = "SELECT DISTINCT images.photo_id " +
 						"FROM images, group_lists ";
+				//If user is not admin, check for permissions.
 				if ( !(userID.equals("admin"))) {
 						query += "WHERE (images.permitted = group_lists.group_id " +
 								 "AND group_lists.friend_id = '" + userID +"' ) " +
@@ -95,16 +106,12 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 				}
 		    }
 		    
+		    //If user is not viewing all or top images, retrieve the query provided by the search module
 		    else {
-				//TODO: get query from session
-		    	//query = "SELECT photo_id FROM images";
 		    	query = (String) session.getAttribute("QUERY");
 		    }
 		    
-			
-		    out.println(query);
-		    out.println("<br><br>");
-		    
+		    //Connect to the database and execute the query.
 		    conn = getConnected();
 		    Statement stmt = conn.createStatement();
 		    ResultSet rset = stmt.executeQuery(query);
@@ -114,9 +121,9 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 		    while (rset.next() ) {
 			p_id = (rset.getObject(1)).toString();
 	
-		       // specify the servlet for the image
+		       // specify the servlet for the image information page
 	               out.println("<a href=\"/Photosight/GetInfo?"+p_id+"\">");
-		       // specify the servlet for the themernail
+		       // specify the servlet for the thumbnail
 		       out.println("<img src=\"/Photosight/GetOnePic?"+p_id +
 		                   "\"></a>");
 		    }
@@ -143,9 +150,6 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 
 	String username = "kboyle";
 	String password = "kieran92";
-        /* one may replace the following for the specified database */
-	//String dbstring = "jdbc.logicsql@luscar.cs.ualberta.ca:2000:database";
-	//String driverName = "com.shifang.logicsql.jdbc.driver.LogicSqlDriver";
 	String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
 	String driverName = "oracle.jdbc.driver.OracleDriver";
 	/*

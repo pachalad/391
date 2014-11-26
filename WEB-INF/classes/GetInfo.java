@@ -4,28 +4,18 @@ import javax.servlet.http.*;
 import java.sql.*;
 
 /**
- *  This servlet sends one picture stored in the table below to the client 
- *  who requested the servlet.
- *
- *   picture( photo_id: integer, title: varchar, place: varchar, 
- *            sm_image: blob,   image: blob )
+ *  This servlet displays descriptive and security information for
+ *  the given image.
  *
  *  The request must come with a query string as follows:
- *    GetOnePic?12:        sends the picture in sm_image with photo_id = 12
- *    GetOnePicture?big12: sends the picture in image  with photo_id = 12
- *
+ *    GetInfo?12:        displays the image with photo_id = 12
+ *    
  *  @author  Li-Yan Yuan
+ *  Adapted by Benjamin Holmwood
  *
  */
 public class GetInfo extends HttpServlet 
     implements SingleThreadModel {
-
-    /**
-     *    This method first gets the query string indicating PHOTO_ID,
-     *    and then executes the query 
-     *          select image from yuan.photos where photo_id = PHOTO_ID   
-     *    Finally, it sends the picture to the client
-     */
 
     public void doGet(HttpServletRequest request,
 		      HttpServletResponse response)
@@ -65,6 +55,8 @@ public class GetInfo extends HttpServlet
 			    conn = getConnected();
 			    Statement stmt = conn.createStatement();
 		        
+			    //First check if the user has permission to view the requested image
+
 		        String permissionQuery = "SELECT count(*) " +
 		        				  		 "FROM ( SELECT DISTINCT images.photo_id " +
 		        				  	     		"FROM images, group_lists " +
@@ -79,6 +71,8 @@ public class GetInfo extends HttpServlet
 
 		        checkrset.next();
 		        int check = Integer.parseInt(checkrset.getObject(1).toString());
+
+		        //Check is skipped if the user is admin.
 		        if ( (check < 1) && !(userID.equals("admin")) ) {
 		            out.println("<html><head><title>Access Denied</title></head>" +
 		            		"<body bgcolor=\"#000000\" text=\"#cccccc\">" +
