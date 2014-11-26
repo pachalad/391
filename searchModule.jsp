@@ -16,7 +16,7 @@
       
       String addItemError = "";
       
-      Connection m_con;
+      Connection m_con = null;
       Statement stmt;
       
       try {
@@ -30,6 +30,12 @@
         out.print("Error displaying data: ");
         out.println(e.getMessage());
         return;
+      } finally {
+			try {
+		    	m_con.close();
+		    } catch ( SQLException ex) {
+		    	out.println( ex.getMessage() );
+		    }
       }
 
       //try {

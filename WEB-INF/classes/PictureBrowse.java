@@ -61,6 +61,8 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 		/*
 		 *   to execute the given query
 		 */
+		
+		Connection conn = null;
 		try {
 			
 			String query;
@@ -103,7 +105,7 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 		    out.println(query);
 		    out.println("<br><br>");
 		    
-		    Connection conn = getConnected();
+		    conn = getConnected();
 		    Statement stmt = conn.createStatement();
 		    ResultSet rset = stmt.executeQuery(query);
 		    String p_id = "";
@@ -118,14 +120,21 @@ public class PictureBrowse extends HttpServlet implements SingleThreadModel {
 		       out.println("<img src=\"/Photosight/GetOnePic?"+p_id +
 		                   "\"></a>");
 		    }
-		    stmt.close();
-		    conn.close();
-		} catch ( Exception ex ){ out.println( ex.toString() );}
-			out.println("<P><a href=\"/Photosight/main_page.jsp\"> Return </a>");
-			out.println("</body>");
-			out.println("</html>");
+		} catch ( Exception ex ){ 
+			out.println( ex.toString() );
+		} finally {
+			try {
+		    	conn.close();
+		    } catch ( SQLException ex) {
+		    	out.println( ex.getMessage() );
+		    }
 	    }
-    }
+	}
+		
+	out.println("<P><a href=\"/Photosight/main_page.jsp\"> Return </a>");
+	out.println("</body>");
+	out.println("</html>");
+}
 	    
     /*
      *   Connect to the specified database
