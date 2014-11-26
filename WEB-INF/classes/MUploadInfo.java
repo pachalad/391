@@ -23,11 +23,13 @@ public class MUploadInfo extends HttpServlet {
     public String response_message;
     public void doPost(HttpServletRequest request,HttpServletResponse response)
 	throws ServletException, IOException {
-	//  change the following parameters to connect to the oracle database
+	// Database stuff
 	String username = "kboyle";
 	String password = "kieran92";
 	String drivername = "oracle.jdbc.driver.OracleDriver";
 	String dbstring ="jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
+
+	// This part gets all the parameters from uploading.jsp.
 	int number = Integer.valueOf(request.getParameter("numofphotos"));
 	String permission = request.getParameter("permission");
 	String subject = request.getParameter("subject");
@@ -37,6 +39,7 @@ public class MUploadInfo extends HttpServlet {
 	String desc = request.getParameter("description");
 	String place = request.getParameter("place");
 	String date = year+"-"+month+"-"+day;
+	// If any of these are null it sets it to a default.
 	if (year.isEmpty() || month.isEmpty() || day.isEmpty()){
 		date = "2014-01-01";
 	}
@@ -62,10 +65,11 @@ public class MUploadInfo extends HttpServlet {
         Connection conn = getConnected(drivername,dbstring, username,password);
 	    Statement stmt = conn.createStatement();
 	    for(int i=0;i<number;i++){
+	    	// Get the next pic id.
 	    	ResultSet rset1 = stmt.executeQuery("SELECT pic_id_sequence.nextval from dual");
 	    	rset1.next();
 	    	pic_id = rset1.getInt(1);
-	    
+	    	// Find the permission id.
 	    	rset1 = stmt.executeQuery("SELECT group_id from groups where group_name='"+permission+"'");
 	    	rset1.next();
 	    	permissionint = rset1.getInt(1);
