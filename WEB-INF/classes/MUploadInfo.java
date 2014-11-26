@@ -36,11 +36,21 @@ public class MUploadInfo extends HttpServlet {
 	String day = request.getParameter("day");
 	String desc = request.getParameter("description");
 	String place = request.getParameter("place");
-
 	String date = year+"-"+month+"-"+day;
 	if (year.isEmpty() || month.isEmpty() || day.isEmpty()){
 		date = "2014-01-01";
 	}
+	if (desc.isEmpty()){
+		desc="None";
+	}
+	if (place.isEmpty()){
+		place="None";
+	}
+	if (subject.isEmpty()){
+		subject="None";
+	}
+	
+
 	
 	String user = request.getParameter("userID");
 	int permissionint=0;
