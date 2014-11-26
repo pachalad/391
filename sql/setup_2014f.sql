@@ -4,6 +4,9 @@
  *              Fall, 2014
  *  Author:     Prof. Li-Yan Yuan
  */
+DROP INDEX subjectIndex;
+DROP INDEX placeIndex;
+DROP INDEX descriptionIndex;
 DROP TABLE distinct_views;
 DROP TABLE images;
 DROP TABLE group_lists;
@@ -19,7 +22,7 @@ CREATE TABLE users (
    primary key(user_name)
 );
 
-insert into users values(admin,admin,sysdate);
+insert into users values('admin','admin',sysdate);
 
 CREATE TABLE persons (
    user_name  varchar(24),
@@ -32,7 +35,7 @@ CREATE TABLE persons (
    UNIQUE (email),
    FOREIGN KEY (user_name) REFERENCES users
 );
-
+insert into persons values('admin','admin','admin','admin','admin',780111111);
 
 CREATE TABLE groups (
    group_id   int,
