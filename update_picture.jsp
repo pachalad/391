@@ -87,7 +87,7 @@
 				DriverManager.registerDriver((Driver) drvClass2.newInstance());
 				Statement stmt2 = conn.createStatement();
 				ResultSet rset2 = stmt2.executeQuery(infoQuery);
-				
+
 		        String owner_name, subject, place, timing, description, year, month, day;
 		
 			    if ( rset2.next() ) {

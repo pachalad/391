@@ -59,7 +59,7 @@ public class MUploadImage extends HttpServlet {
     public String response_message;
     public void doPost(HttpServletRequest request,HttpServletResponse response)
 	throws ServletException, IOException {
-	//  change the following parameters to connect to the oracle database
+	//  Database stuff
 	String username = "kboyle";
 	String password = "kieran92";
 	String drivername = "oracle.jdbc.driver.OracleDriver";
@@ -72,7 +72,7 @@ public class MUploadImage extends HttpServlet {
 	    DiskFileUpload fu = new DiskFileUpload();
 	    List FileItems = fu.parseRequest(request);
 	        
-	    // Process the uploaded items, assuming only 1 image file uploaded
+	    // Process the uploaded items.
         int nbFiles=FileItems.size();
 	    FileItem[] items= new FileItem[nbFiles];
         Iterator i = FileItems.iterator();
@@ -82,12 +82,16 @@ public class MUploadImage extends HttpServlet {
 			j++;
 			items[j] = (FileItem) i.next();
 	    }
-	                // Connect to the database and create a statement
+	     // Connect to the database and create a statement
         Connection conn = getConnected(drivername,dbstring, username,password);
 	    Statement stmt = conn.createStatement();
+	    // Grabs the largest photo_id.
 	    ResultSet rset1 = stmt.executeQuery("SELECT max(photo_id) as photo_id from images");
 	    rset1.next();
 	    pic_id=rset1.getInt(1);
+	    // If there is only one item then the photo_id to add the picture to is the query result.
+	    // If there is more than one then we need to get the photo id where to start adding pictures
+	    // to.
 	    if(j!=1){
 	    pic_id= pic_id - j +1;
 	    }	
@@ -111,6 +115,8 @@ public class MUploadImage extends HttpServlet {
 	    //Write the image to the blob object
 	    	OutputStream outstream = mypictureblob.getBinaryOutputStream();
 	    	OutputStream outstream1 = mythumbnailblob.getBinaryOutputStream();
+	    	// This is so that we can upload JPG and GIF files. The tries are there so the
+	    	// system doesn't crash if a different type is getting uploaded.
 	    	try{
 	    	ImageIO.write(img, "jpg", outstream);
             ImageIO.write(thumbNail,"jpg", outstream1);
@@ -119,6 +125,7 @@ public class MUploadImage extends HttpServlet {
 	    		ImageIO.write(img, "gif", outstream);
 	    		ImageIO.write(thumbNail,"gif", outstream1);
 	    	}catch(Exception e){}
+	    	// Get the next pic!
             pic_id++;
 	
 	    
