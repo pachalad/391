@@ -1,0 +1,3 @@
+CREATE INDEX subjectIndex ON images(subject) INDEXTYPE IS CTXSYS.CONTEXT;
+CREATE INDEX placeIndex ON images(place) INDEXTYPE IS CTXSYS.CONTEXT;
+CREATE INDEX descriptionIndex ON images(description) INDEXTYPE IS CTXSYS.CONTEXT;

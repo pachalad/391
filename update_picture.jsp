@@ -71,16 +71,13 @@
 				String group;
 				Class drvClass1 = Class.forName(driverName);
 				DriverManager.registerDriver((Driver) drvClass1.newInstance());
-				Connection conn1 = DriverManager.getConnection(dbstring,username,password);
-				Statement stmt1 = conn1.createStatement();
+				Statement stmt1 = conn.createStatement();
 				ResultSet rset1 = stmt1.executeQuery(query);
 				out.println("Permission:<select name='permission'>");
 				while (rset1.next()) {
 					group = rset1.getObject(1).toString();
 					out.println("<option value="+'"'+group+'"'+'>'+group+"</option>");
 					}
-				stmt1.close();
-				conn1.close();
 				
 				out.println("</select><br>");
 				
@@ -88,12 +85,8 @@
 									"FROM images WHERE photo_id=" + picID;
 				Class drvClass2 = Class.forName(driverName);
 				DriverManager.registerDriver((Driver) drvClass2.newInstance());
-				Connection conn2 = DriverManager.getConnection(dbstring,username,password);
-				Statement stmt2 = conn2.createStatement();
+				Statement stmt2 = conn.createStatement();
 				ResultSet rset2 = stmt2.executeQuery(infoQuery);
-				
-				stmt2.close();
-				conn2.close();
 				
 		        String owner_name, subject, place, timing, description, year, month, day;
 		
@@ -131,7 +124,6 @@
 		// to close the connection
 		finally {
 			try {
-				stmt.close();
 		    	conn.close();
 		    } catch ( SQLException ex) {
 		    	out.println( ex.getMessage() );

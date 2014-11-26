@@ -9,15 +9,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-/**
- *  The package commons-fileupload-1.0.jar is downloaded from 
- *         http://jakarta.apache.org/commons/fileupload/ 
- *  and it has to be put under WEB-INF/lib/ directory in your servlet context.
- *  One shall also modify the CLASSPATH to include this jar file.
- */
-import org.apache.commons.fileupload.DiskFileUpload;
-import org.apache.commons.fileupload.FileItem;
-
 public class UpdatePicture extends HttpServlet {
     public String response_message;
     public void doPost(HttpServletRequest request,HttpServletResponse response)
